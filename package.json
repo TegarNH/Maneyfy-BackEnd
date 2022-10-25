@@ -1,0 +1,19 @@
+{
+  "name": "maneyfy-backend",
+  "version": "1.0.0",
+  "description": "Manage your Money Easily",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/C22-017/Maneyfy-BackEnd.git"
+  },
+  "author": "C22-017",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/C22-017/Maneyfy-BackEnd/issues"
+  },
+  "homepage": "https://github.com/C22-017/Maneyfy-BackEnd#readme"
+}
