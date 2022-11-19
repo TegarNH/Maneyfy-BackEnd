@@ -1,0 +1,16 @@
+[
+    {
+        "user_id": 1,
+        "icDompet_id": 2,
+        "name_dompet": "BNI",
+        "amount": "100000",
+        "url": "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png"
+    },
+    {
+        "user_id": 2,
+        "icDompet_id": 2,
+        "name_dompet": "BNI",
+        "amount": "300000",
+        "url": "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png"
+    }
+]

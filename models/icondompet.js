@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       IconDompet.hasMany(models.Dompet, {
-        foreignKey: 'id_icDompet'
+        foreignKey: 'icDompet_id'
       });
     }
   }

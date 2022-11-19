@@ -3,7 +3,7 @@ const { Dompet }             = require('../models');
 const getDompetData = async (req, res) => {
     try {
         const foundDompet = await Dompet.findByPk(req.Dompet.id, {
-            attributes: [ 'user_id', 'id_icDompet', 'name_dompet', 'amount', 'url' ],
+            attributes: [ 'user_id', 'icDompet_id', 'name_dompet', 'amount', 'url' ],
         });
         
         return res.status(200).json({
@@ -35,11 +35,11 @@ const getDompetById = async (req, res) => {
 
 const createDompet = async (req, res) => {
     try {
-        const { user_id, id_icDompet, name_dompet, amount, url } = req.body;
+        const { user_id, icDompet_id, name_dompet, amount, url } = req.body;
     
         const createdDompet = await Dompet.create({
             user_id: user_id,
-            id_icDompet: id_icDompet,
+            icDompet_id: icDompet_id,
             name_dompet: name_dompet,
             amount: amount,
             url: url
@@ -58,7 +58,7 @@ const createDompet = async (req, res) => {
 
 const updateDompet = async (req, res) => {
     try {
-        const { user_id, id_icDompet, name_dompet, amount, url } = req.body;
+        const { user_id, icDompet_id, name_dompet, amount, url } = req.body;
         let id = req.Dompet.id;
         if(!( await Dompet.findByPk(id))) return res.status(404).json({
           status:"Error",
@@ -67,7 +67,7 @@ const updateDompet = async (req, res) => {
         
         const updatedDompet = await Dompet.update({
             user_id: user_id,
-            id_icDompet: id_icDompet,
+            icDompet_id: icDompet_id,
             name_dompet: name_dompet,
             amount: amount,
             url: url

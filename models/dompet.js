@@ -15,13 +15,13 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id'
       });
       Dompet.belongsTo(models.IconDompet, {
-        foreignKey: 'id_icDompet'
+        foreignKey: 'icDompet_id'
       });
     }
   }
   Dompet.init({
     user_id: DataTypes.INTEGER,
-    id_icDompet: DataTypes.INTEGER,
+    icDompet_id: DataTypes.INTEGER,
     name_dompet: DataTypes.STRING,
     amount: DataTypes.INTEGER,
     url: DataTypes.STRING

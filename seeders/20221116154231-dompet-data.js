@@ -6,7 +6,7 @@ module.exports = {
     const dataDompetsToBeSeeded = DompetsData.map((eachDompetData) => {
       return {
         user_id: eachDompetData.user_id,
-        id_icDompet: eachDompetData.id_icDompet,
+        icDompet_id: eachDompetData.icDompet_id,
         name_dompet: eachDompetData.name_dompet,
         amount: eachDompetData.amount,
         url: eachDompetData.url,
