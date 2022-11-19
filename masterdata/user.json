@@ -1,18 +1,12 @@
 [
     {
-        "name": "Nely Dwi A",
+        "name": "Nely Dwi Agustin",
         "email": "nenda@gmail.com",
-        "password": "1",
-        "city": "Jakarta",
-        "address": "tanjung",
-        "phone_number": "087654321897"
+        "password": "1237890u"
     },
     {
         "name": "Nur Rini Riani",
         "email": "nur@gmail.com",
-        "password": "2",
-        "city": "Bandung",
-        "address": "kringan",
-        "phone_number": "089532132175"
+        "password": "2987890h"
     }
 ]
