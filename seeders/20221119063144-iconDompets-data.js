@@ -1,9 +1,9 @@
 'use strict';
-const IconDompetsData = require('../masterdata/iconDompet.json');
+const iconDompetsData = require('../masterdata/iconDompet.json');
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const dataIconDompetsToBeSeeded = IconDompetsData.map((eachIconDompetData) => {
+    const dataIconDompetsToBeSeeded = iconDompetsData.map((eachIconDompetData) => {
       return {
         url_icDompet : eachIconDompetData.url_icDompet,
         createdAt: new Date(),

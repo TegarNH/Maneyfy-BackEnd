@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Dompet, {
         foreignKey: 'user_id'
       });
+      User.hasMany(models.Spending, {
+        foreignKey: 'user_id'
+      });
     }
   }
   User.init({

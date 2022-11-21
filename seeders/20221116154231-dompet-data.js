@@ -1,9 +1,9 @@
 'use strict';
-const DompetsData = require('../masterdata/Dompet.json');
+const dompetsData = require('../masterdata/Dompet.json');
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const dataDompetsToBeSeeded = DompetsData.map((eachDompetData) => {
+    const dataDompetsToBeSeeded = dompetsData.map((eachDompetData) => {
       return {
         user_id: eachDompetData.user_id,
         icDompet_id: eachDompetData.icDompet_id,
