@@ -1,26 +1,14 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Earnings', {
+    await queryInterface.createTable('IconEarnings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
-        type: Sequelize.INTEGER
-      },
-      categoryEarning_id: {
-        type: Sequelize.INTEGER
-      },
-      dompet_id: {
-        type: Sequelize.INTEGER
-      },
-      earning: {
-        type: Sequelize.INTEGER
-      },
-      name_earning: {
+      url_icEarning: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -34,6 +22,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Earnings');
+    await queryInterface.dropTable('IconEarnings');
   }
 };

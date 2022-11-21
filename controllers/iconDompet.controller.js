@@ -8,7 +8,7 @@ const getIconDompetData = async (req, res) => {
         
         return res.status(200).json({
             status: "success",
-            msg: "IconDompet berhasil ditemukan",
+            msg: "Icon Dompet berhasil ditemukan",
             data: foundIconDompet
         })
     } catch (err) {
@@ -24,7 +24,7 @@ const getIconDompetById = async (req, res) => {
 
     if (!foundIconDompet) {
         return res.status(404).json({
-            msg: `IconDompet dengan id ${req.params.id} tidak ditemukan`
+            msg: `Icon Dompet dengan id ${req.params.id} tidak ditemukan`
         })
     }
     res.status(200).json({

@@ -14,7 +14,7 @@ module.exports = {
       dompet_id: {
         type: Sequelize.INTEGER
       },
-      kategoriSpending_id: {
+      categorySpending_id: {
         type: Sequelize.INTEGER
       },
       spending: {

@@ -1,15 +1,13 @@
 'use strict';
-const earningsData = require('../masterdata/earning.json');
+const categoryEarningsData = require('../masterdata/categoryEarning.json');
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    const dataEarningsToBeSeeded = earningsData.map((eachEarningData) => {
+    const dataEarningsToBeSeeded = categoryEarningsData.map((eachEarningData) => {
       return {
         user_id: eachEarningData.user_id,
-        categoryEarning_id: eachEarningData.categoryEarning_id,
-        dompet_id: eachEarningData.dompet_id,
-        earning: eachEarningData.Earning,
-        name_earning: eachEarningData.name_earning,
+        icEarning_id: eachEarningData.icEarning_id,
+        categoryName_earning: eachEarningData.categoryName_earning,
         createdAt: new Date(),
         updatedAt: new Date()
       }

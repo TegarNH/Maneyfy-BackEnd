@@ -1,14 +1,14 @@
 [
     {
         "user_id": 1,
-        "kategoriSpending_id": 1,
+        "categorySpending_id": 1,
         "dompet_id": 2,
         "spending": 1000000,
         "name_spending": "makan"
     },
     {
         "user_id": 2,
-        "kategoriSpending_id": 2,
+        "categorySpending_id": 2,
         "dompet_id": 3,
         "spending": 2000000,
         "name_spending": "minum"

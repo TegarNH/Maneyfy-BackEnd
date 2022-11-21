@@ -1,0 +1,12 @@
+[
+    {
+        "user_id": 1,
+        "icEarning_id": 2,
+        "categoryName_earning": "subMinum"
+    },
+    {
+        "user_id": 2,
+        "icEarning_id": 1,
+        "categoryName_earning": "subMakan"
+    }
+]

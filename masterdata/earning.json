@@ -1,14 +1,14 @@
 [
     {
         "user_id": 1,
-        "kategoriEarning_id": 1,
+        "categoryEarning_id": 1,
         "dompet_id": 2,
         "earning": 100000,
         "name_earning": "minum"
     },
     {
         "user_id": 2,
-        "kategoriEarning_id": 2,
+        "categoryEarning_id": 2,
         "dompet_id": 3,
         "earning": 200000,
         "name_earning": "makan"

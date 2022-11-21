@@ -1,0 +1,12 @@
+[
+    {
+        "user_id": 2,
+        "icSpending_id": 1,
+        "categoryName_spending": "subMakan"
+    },
+    {
+        "user_id": 1,
+        "icSpending_id": 2,
+        "categoryName_spending": "subMinum"
+    }
+]

@@ -3,7 +3,7 @@ const { Spending }             = require('../models');
 const getSpendingData = async (req, res) => {
     try {
         const foundSpending = await Spending.findByPk(req.Spending.id, {
-            attributes: [ 'user_id', 'kategoriSpending_id', 'dompet_id', 'spending', 'name_spending' ],
+            attributes: [ 'user_id', 'categorySpending_id', 'dompet_id', 'spending', 'name_spending' ],
         });
         
         return res.status(200).json({
@@ -35,11 +35,11 @@ const getSpendingById = async (req, res) => {
 
 const createSpending = async (req, res) => {
     try {
-        const { user_id, kategoriSpending_id, dompet_id, spending, name_spending } = req.body;
+        const { user_id, categorySpending_id, dompet_id, spending, name_spending } = req.body;
     
         const createdSpending = await Spending.create({
             user_id: user_id,
-            kategoriSpending_id: kategoriSpending_id,
+            categorySpending_id: categorySpending_id,
             dompet_id: dompet_id,
             spending: spending,
             name_spending: name_spending
@@ -58,7 +58,7 @@ const createSpending = async (req, res) => {
 
 const updateSpending = async (req, res) => {
     try {
-        const { user_id, kategoriSpending_id, dompet_id, spending, name_spending } = req.body;
+        const { user_id, categorySpending_id, dompet_id, spending, name_spending } = req.body;
         let id = req.Spending.id;
         if(!( await Spending.findByPk(id))) return res.status(404).json({
           status:"Error",
@@ -67,7 +67,7 @@ const updateSpending = async (req, res) => {
         
         const updatedSpending = await Spending.update({
             user_id: user_id,
-            kategoriSpending_id: kategoriSpending_id,
+            categorySpending_id: categorySpending_id,
             dompet_id: dompet_id,
             spending: spending,
             name_spending: name_spending

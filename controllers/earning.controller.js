@@ -3,7 +3,7 @@ const { Earning }             = require('../models');
 const getEarningData = async (req, res) => {
     try {
         const foundEarning = await Earning.findByPk(req.Earning.id, {
-            attributes: [ 'user_id', 'kategoriEarning_id', 'dompet_id', 'earning', 'name_earning' ],
+            attributes: [ 'user_id', 'categoryEarning_id', 'dompet_id', 'earning', 'name_earning' ],
         });
         
         return res.status(200).json({
@@ -35,11 +35,11 @@ const getEarningById = async (req, res) => {
 
 const createEarning = async (req, res) => {
     try {
-        const { user_id, kategoriEarning_id, dompet_id, earning, name_earning } = req.body;
+        const { user_id, categoryEarning_id, dompet_id, earning, name_earning } = req.body;
     
         const createdEarning = await Earning.create({
             user_id: user_id,
-            kategoriEarning_id: kategoriEarning_id,
+            categoryEarning_id: categoryEarning_id,
             dompet_id: dompet_id,
             earning: earning,
             name_earning: name_earning
@@ -58,7 +58,7 @@ const createEarning = async (req, res) => {
 
 const updateEarning = async (req, res) => {
     try {
-        const { user_id, kategoriEarning_id, dompet_id, earning, name_earning } = req.body;
+        const { user_id, categoryEarning_id, dompet_id, earning, name_earning } = req.body;
         let id = req.Earning.id;
         if(!( await Earning.findByPk(id))) return res.status(404).json({
           status:"Error",
@@ -67,7 +67,7 @@ const updateEarning = async (req, res) => {
         
         const updatedEarning = await Earning.update({
             user_id: user_id,
-            kategoriEarning_id: kategoriEarning_id,
+            categoryEarning_id: categoryEarning_id,
             dompet_id: dompet_id,
             earning: earning,
             name_earning: name_earning

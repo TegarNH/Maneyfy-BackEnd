@@ -1,9 +1,6 @@
 const { User }             = require('../models');
 const bcrypt               = require('bcrypt');
 const jwt                  = require('jsonwebtoken');
-const { SALT_ROUNDS }      = process.env;
-// const {sendEmail, sendOTP} = require('../misc/mailer')
-const { checkPassword }    = require('../misc/auth')
 
 const register = async (req, res) => {
     try {
