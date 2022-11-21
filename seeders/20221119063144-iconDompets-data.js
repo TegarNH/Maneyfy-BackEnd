@@ -1,5 +1,5 @@
 'use strict';
-const IconDompetsData = require('../masterdata/IconDompet.json');
+const IconDompetsData = require('../masterdata/iconDompet.json');
 
 module.exports = {
   async up (queryInterface, Sequelize) {
