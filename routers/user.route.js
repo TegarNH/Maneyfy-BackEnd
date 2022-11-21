@@ -1,7 +1,7 @@
-const express              = require('express');
-const router               = express.Router();
-const userController       = require('../controllers/user.controller');
-const imageUpload          = require('../misc/multer');
+const express                = require('express');
+const router                 = express.Router();
+const userController         = require('../controllers/user.controller');
+const imageUpload            = require('../misc/multer');
 const {authenticate}         = require('../misc/passport');
 const {uploadWithCloudinary} = require('../misc/cloudinary');
 

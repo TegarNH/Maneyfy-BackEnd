@@ -3,7 +3,8 @@ const router                = express.Router();
 const userRoutes            = require('./user.route');
 const dompetRoutes          = require('./dompet.route');
 const icondompetRoutes      = require('./iconDompet.route');
-const spendingRoutes      = require('./spending.route');
+const spendingRoutes        = require('./spending.route');
+const earningRoutes        = require('./earning.route');
 const authController        = require('../controllers/auth.controller');
 const { createValidationFor, checkValidationResult } = require('../misc/validator');
 
@@ -15,6 +16,6 @@ router.use('/user', userRoutes);
 router.use('/dompet', dompetRoutes);
 router.use('/iconDompet', icondompetRoutes);
 router.use('/spending', spendingRoutes);
-
+router.use('/earning', earningRoutes);
 
 module.exports = router;

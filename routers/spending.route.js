@@ -1,7 +1,7 @@
-const express              = require('express');
-const router               = express.Router();
+const express                  = require('express');
+const router                   = express.Router();
 const spendingController       = require('../controllers/spending.controller');
-const {authenticate}         = require('../misc/passport');
+const {authenticate}           = require('../misc/passport');
 
 router.get('/', authenticate, spendingController.getSpendingData);
 router.get('/:id', authenticate, spendingController.getSpendingById);
