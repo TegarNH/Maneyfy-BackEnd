@@ -5,6 +5,7 @@ const imageUpload          = require('../misc/multer');
 const {authenticate}         = require('../misc/passport');
 const {uploadWithCloudinary} = require('../misc/cloudinary');
 
-router.get('/dompet', authenticate, dompetController.getDompetData);
+router.get('/', authenticate, dompetController.getDompetData);
+router.get('/:id', authenticate, dompetController.getDompetById);
 
 module.exports = router;

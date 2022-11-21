@@ -1,4 +1,7 @@
 'use strict';
+
+const { sequelize } = require("../models");
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Dompets', {
@@ -10,6 +13,9 @@ module.exports = {
       },
       user_id: {
         type: Sequelize.INTEGER
+      },
+      icDompet_id: {
+        type: sequelize.INTEGER
       },
       name_dompet: {
         type: Sequelize.STRING
