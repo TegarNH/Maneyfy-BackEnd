@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       icDompet_id: {
-        type: sequelize.INTEGER
+        type: Sequelize.INTEGER
       },
       name_dompet: {
         type: Sequelize.STRING
