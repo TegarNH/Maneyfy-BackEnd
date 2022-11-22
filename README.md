@@ -1,7 +1,5 @@
 # Maneyfy-BackEnd
 
-SIB Dicoding Batch 3
-Capstone Team C22-017
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
