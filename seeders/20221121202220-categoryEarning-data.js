@@ -12,10 +12,10 @@ module.exports = {
         updatedAt: new Date()
       }
     })
-    await queryInterface.bulkInsert('Earnings', dataEarningsToBeSeeded, {});
+    await queryInterface.bulkInsert('CategoryEarnings', dataEarningsToBeSeeded, {});
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Earnings', null, { truncate: true, restartIdentity: true });
+    await queryInterface.bulkDelete('CategoryEarnings', null, { truncate: true, restartIdentity: true });
   }
 };

@@ -1,24 +1,19 @@
 'use strict';
+const iconEarningsData = require('../masterdata/iconEarning.json');
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
+    const dataIconEarningsToBeSeeded = iconEarningsData.map((eachIconEarningData) => {
+      return {
+        url_icEarning : eachIconEarningData.url_icEarning,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    })
+    await queryInterface.bulkInsert('IconEarnings', dataIconEarningsToBeSeeded, {});
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete('IconEarnings', null, { truncate: true, restartIdentity: true });
   }
 };
