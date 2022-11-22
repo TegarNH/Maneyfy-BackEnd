@@ -10,6 +10,7 @@ module.exports = {
         dompet_id: eachEarningData.dompet_id,
         earning: eachEarningData.Earning,
         name_earning: eachEarningData.name_earning,
+        date_earning: eachEarningData.date_earning,
         createdAt: new Date(),
         updatedAt: new Date()
       }

@@ -10,6 +10,7 @@ module.exports = {
         dompet_id: eachSpendingData.dompet_id,
         spending: eachSpendingData.spending,
         name_spending: eachSpendingData.name_spending,
+        date_spending: eachSpendingData.date_spending,
         createdAt: new Date(),
         updatedAt: new Date()
       }

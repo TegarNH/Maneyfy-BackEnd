@@ -23,6 +23,9 @@ module.exports = {
       name_earning: {
         type: Sequelize.STRING
       },
+      date_earning: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -4,13 +4,15 @@
         "categoryEarning_id": 1,
         "dompet_id": 2,
         "earning": 100000,
-        "name_earning": "minum"
+        "name_earning": "minum",
+        "date_earning": "12/12/22"
     },
     {
         "user_id": 2,
         "categoryEarning_id": 2,
         "dompet_id": 3,
         "earning": 200000,
-        "name_earning": "makan"
+        "name_earning": "makan",
+        "date_earning": "12/11/22"
     }
 ]
