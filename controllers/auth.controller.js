@@ -21,7 +21,7 @@ const register = async (req, res) => {
             name: name,
             email: email,
             password: password,
-            profile_picture: "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png"
+            profile_picture: "https://res.cloudinary.com/dzskwtwm7/image/upload/v1669220512/user/user_quy29n.webp"
         });
         // const emailRes = await sendEmail(email, name);
         return res.status(201).json({

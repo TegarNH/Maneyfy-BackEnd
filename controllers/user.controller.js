@@ -22,8 +22,8 @@ const getUserData = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
       const {name, email, profile_picture} = req.body;
-      let id = req.user.id;
-      if(!( await User.findByPk(id))) return res.status(404).json({
+      const idUser = req.user.id;
+      if(!( await User.findByPk(idUser))) return res.status(404).json({
         status:"Error",
         msg:"User not found!"
       });
@@ -34,7 +34,7 @@ const updateUser = async (req, res) => {
           profile_picture: profile_picture
       }, {
           where: {
-              id: id
+              id: idUser
           }
       });
 
@@ -47,21 +47,23 @@ const updateUser = async (req, res) => {
       res.status(400).json({
           status: "Error",
           msg: "Update data failed!",
-          error: error
+          id: idUser,
+          error: error.message
       });
   }
 };
 
 const deleteUser = async (req, res) => {
     try{
+      const idUser = req.user.id;
         const deletedUser = await User.destroy({
             where: {
-                id: req.params.id
+                id: idUser
             }
         });
         if (!deletedUser) {
           return res.status(404).json({
-            msg: `User dengan id ${req.params.id} tidak ditemukan`
+            msg: `User dengan id ${idUser} tidak ditemukan`
         })
         }
         res.status(200).json({ 

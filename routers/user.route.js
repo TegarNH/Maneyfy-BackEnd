@@ -6,7 +6,7 @@ const {authenticate}         = require('../misc/passport');
 const {uploadWithCloudinary} = require('../misc/cloudinary');
 
 router.get('/data', authenticate, userController.getUserData);
-router.put('/', imageUpload.single('profile_picture'), uploadWithCloudinary, userController.updateUser);
-router.delete('/:id',  userController.deleteUser);
+router.put('/', authenticate, imageUpload.single('profile_picture'), uploadWithCloudinary, userController.updateUser);
+router.delete('/delete', authenticate, userController.deleteUser);
 
 module.exports = router;

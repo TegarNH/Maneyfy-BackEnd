@@ -2,11 +2,13 @@
     {
         "name": "Nely Dwi Agustin",
         "email": "nenda@gmail.com",
-        "password": "1237890u"
+        "password": "1237890u",
+        "profile_picture": "https://res.cloudinary.com/dzskwtwm7/image/upload/v1669220512/user/user_quy29n.webp"
     },
     {
-        "name": "Nur Rini Riani",
-        "email": "nur@gmail.com",
-        "password": "2987890h"
+        "name": "Tegar Naufal Hanip",
+        "email": "tegarnh@gmail.com",
+        "password": "tegar123",
+        "profile_picture": "https://res.cloudinary.com/dzskwtwm7/image/upload/v1669220512/user/user_quy29n.webp"
     }
 ]

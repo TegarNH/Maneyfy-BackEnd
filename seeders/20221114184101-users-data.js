@@ -9,6 +9,7 @@ module.exports = {
         name: eachUserData.name,
         email: eachUserData.email,
         password: bcrypt.hashSync(eachUserData.password, +process.env.SALT_ROUNDS),
+        profile_picture: eachUserData.profile_picture,
         createdAt: new Date(),
         updatedAt: new Date()
       }

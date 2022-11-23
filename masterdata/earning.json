@@ -5,7 +5,7 @@
         "dompet_id": 2,
         "earning": 100000,
         "name_earning": "minum",
-        "date_earning": "12/12/22"
+        "date_earning": "2022-05-21"
     },
     {
         "user_id": 2,
@@ -13,6 +13,6 @@
         "dompet_id": 3,
         "earning": 200000,
         "name_earning": "makan",
-        "date_earning": "12/11/22"
+        "date_earning": "2022-02-15"
     }
 ]
