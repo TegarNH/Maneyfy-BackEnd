@@ -1,12 +1,87 @@
 [
-    {
-        "user_id": 2,
-        "icSpending_id": 1,
-        "categoryName_spending": "subMakan"
-    },
-    {
-        "user_id": 1,
-        "icSpending_id": 2,
-        "categoryName_spending": "subMinum"
-    }
+  {
+    "user_id": 1,
+    "icSpending_id": 1,
+    "categoryName_spending": "Pulsa dan Paket Data"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 2,
+    "categoryName_spending": "Makan dan Minuman"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 3,
+    "categoryName_spending": "Transportasi"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 4,
+    "categoryName_spending": "Tagihan Listrik"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 5,
+    "categoryName_spending": "Tagihan Air"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 6,
+    "categoryName_spending": "Tagihan Internet"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 7,
+    "categoryName_spending": "Tagihan TV Kabel"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 8,
+    "categoryName_spending": "Belanja Mingguan"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 9,
+    "categoryName_spending": "Belanja Bulanan"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 10,
+    "categoryName_spending": "Rekreasi"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 11,
+    "categoryName_spending": "Modal Investasi"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 12,
+    "categoryName_spending": "Asuransi"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 13,
+    "categoryName_spending": "Tagihan Kartu Kredit"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 14,
+    "categoryName_spending": "Biaya Pendidikan"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 15,
+    "categoryName_spending": "Donasi & Zakat"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 16,
+    "categoryName_spending": "Pembayaran BPJS"
+  },
+  {
+    "user_id": 1,
+    "icSpending_id": 17,
+    "categoryName_spending": "Pembayaran Pajak"
+  }
 ]

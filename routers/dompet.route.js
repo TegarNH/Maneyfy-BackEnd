@@ -3,10 +3,10 @@ const router                 = express.Router();
 const dompetController       = require('../controllers/dompet.controler');
 const {authenticate}         = require('../misc/passport');
 
-router.get('/', authenticate, dompetController.getDompetData);
+router.get('/data', authenticate, dompetController.getDompetData);
 router.get('/:id', authenticate, dompetController.getDompetById);
-router.post('/', dompetController.createDompet);
-router.put('/:id', dompetController.updateDompet);
-router.delete('/:id', dompetController.deleteDompet);
+router.post('/', authenticate, dompetController.createDompet);
+router.put('/:id', authenticate, dompetController.updateDompet);
+router.delete('/:id', authenticate, dompetController.deleteDompet);
 
 module.exports = router;

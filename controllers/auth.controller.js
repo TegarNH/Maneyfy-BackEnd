@@ -1,4 +1,4 @@
-const { User }             = require('../models');
+const { User, IconDompet, Dompet } = require('../models');
 const bcrypt               = require('bcrypt');
 const jwt                  = require('jsonwebtoken');
 
@@ -23,11 +23,22 @@ const register = async (req, res) => {
             password: password,
             profile_picture: "https://res.cloudinary.com/dzskwtwm7/image/upload/v1669220512/user/user_quy29n.webp"
         });
+        const foundIconDompet = await IconDompet.findByPk(1, {
+          attributes: [ 'url_icDompet' ],
+        });
+        const createdDompet = await Dompet.create({
+          user_id: createdUser.id,
+          icDompet_id: 1,
+          name_dompet: "Cash",
+          amount: 0,
+          url: foundIconDompet.url_icDompet
+        });
         // const emailRes = await sendEmail(email, name);
         return res.status(201).json({
             status: 'success',
             msg: 'User created successfully',
-            data: createdUser
+            data: createdUser,
+            dataDompet: createdDompet
         });
     } catch (err) {
         return res.status(500).json({
@@ -59,9 +70,7 @@ const login = async (req, res) => {
         name: foundUser.name,
         email: foundUser.email
       };
-      const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: '1h'
-      });
+      const token = jwt.sign(payload, process.env.JWT_SECRET);
       return res.status(200).json({
         msg: "Login Success",
         token: token

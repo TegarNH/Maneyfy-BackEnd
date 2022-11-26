@@ -2,7 +2,7 @@ const { Dompet }             = require('../models');
 
 const getDompetData = async (req, res) => {
     try {
-        const foundDompet = await Dompet.findByPk(req.Dompet.id, {
+        const foundDompet = await Dompet.findByPk(req.user.id, {
             attributes: [ 'user_id', 'icDompet_id', 'name_dompet', 'amount', 'url' ],
         });
         
@@ -37,6 +37,9 @@ const createDompet = async (req, res) => {
     try {
         const { user_id, icDompet_id, name_dompet, amount, url } = req.body;
     
+        // const foundIconDompet = await IconDompet.findByPk(icDompet_id, {
+        //   attributes: [ 'url_icDompet' ],
+        // });
         const createdDompet = await Dompet.create({
             user_id: user_id,
             icDompet_id: icDompet_id,

@@ -2,17 +2,9 @@
     {
         "user_id": 1,
         "categoryEarning_id": 1,
-        "dompet_id": 2,
+        "dompet_id": 1,
         "earning": 100000,
-        "name_earning": "minum",
+        "name_earning": "Gaji",
         "date_earning": "2022-05-21"
-    },
-    {
-        "user_id": 2,
-        "categoryEarning_id": 2,
-        "dompet_id": 3,
-        "earning": 200000,
-        "name_earning": "makan",
-        "date_earning": "2022-02-15"
     }
 ]

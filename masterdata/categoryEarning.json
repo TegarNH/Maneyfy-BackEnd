@@ -1,12 +1,38 @@
 [
-    {
-        "user_id": 1,
-        "icEarning_id": 2,
-        "categoryName_earning": "subMinum"
-    },
-    {
-        "user_id": 2,
-        "icEarning_id": 1,
-        "categoryName_earning": "subMakan"
-    }
+  {
+    "user_id": 1,
+    "icEarning_id": 1,
+    "categoryName_earning": "Gaji"
+  },
+  {
+    "user_id": 1,
+    "icEarning_id": 2,
+    "categoryName_earning": "Bonus Gaji"
+  },
+  {
+    "user_id": 1,
+    "icEarning_id": 3,
+    "categoryName_earning": "Uang Bulanan"
+  },
+  {
+    "user_id": 1,
+    "icEarning_id": 4,
+    "categoryName_earning": "Hasil Penjualan"
+  },
+  {
+    "user_id": 1,
+    "icEarning_id": 5,
+    "categoryName_earning": "Pinjaman"
+  },
+  {
+    "user_id": 1,
+    "icEarning_id": 6,
+    "categoryName_earning": "Keuntungan Investasi"
+  }
+  ,
+  {
+    "user_id": 1,
+    "icEarning_id": 7,
+    "categoryName_earning": "Pendapatan Sewa"
+  }
 ]
