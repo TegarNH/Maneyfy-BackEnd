@@ -3,21 +3,43 @@ const { Op } = require("sequelize");
 
 const getEarningData = async (req, res) => {
     try {
+      const { month, year } = req.query;
 
-      const options = {
-        attributes: [ 'user_id', 'categoryEarning_id', 'dompet_id', 'earning', 'name_earning', 'date_earning' ],
-        where: {
-          [Op.and]: [
-            sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_earning')), 2022),
-            sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_earning')), 05),
-            { user_id: 1 },
-            { dompet_id: 1 },
-          ],
+      if(month && year) {
+        const options = {
+          attributes: [ 'user_id', 'categoryEarning_id', 'dompet_id', 'earning', 'name_earning', 'date_earning' ],
+          where: {
+            [Op.and]: [
+              sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_earning')), parseInt(year)),
+              sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_earning')), parseInt(month)),
+              { user_id: 1 },
+              { dompet_id: 1 },
+            ],
+            
+          }
+        };
+    
+        const allProducts = await Earning.findAll(options);
+        return res.status(200).json({
+          status: "success",
+          msg: "Earning berhasil ditemukan",
+          data: allProducts
+      })
+      }
+      // const options = {
+      //   attributes: [ 'user_id', 'categoryEarning_id', 'dompet_id', 'earning', 'name_earning', 'date_earning' ],
+      //   where: {
+      //     [Op.and]: [
+      //       sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_earning')), 2022),
+      //       sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_earning')), 05),
+      //       { user_id: 1 },
+      //       { dompet_id: 1 },
+      //     ],
           
-        }
-      };
+      //   }
+      // };
   
-      const allProducts = await Earning.findAll(options);
+      // const allProducts = await Earning.findAll(options);
   
       // const result = allProducts.map((eachProduct) => {
       //     return {
@@ -26,11 +48,11 @@ const getEarningData = async (req, res) => {
       //     }
       //   })
 
-        return res.status(200).json({
-            status: "success",
-            msg: "Earning berhasil ditemukan",
-            data: allProducts
-        })
+        // return res.status(200).json({
+        //     status: "success",
+        //     msg: "Earning berhasil ditemukan",
+        //     data: allProducts
+        // })
     } catch (err) {
         return res.status(500).json({
             status: 'error',
