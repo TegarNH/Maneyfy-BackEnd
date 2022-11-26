@@ -11,6 +11,9 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER
       },
+      type_transaction: {
+        type: Sequelize.STRING
+      },
       categoryEarning_id: {
         type: Sequelize.INTEGER
       },

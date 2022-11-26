@@ -20,10 +20,14 @@ module.exports = (sequelize, DataTypes) => {
       Earning.belongsTo(models.CategoryEarning, {
         foreignKey: 'categoryEarning_id'
       });
+      Earning.belongsTo(models.CategorySpending, {
+        foreignKey: 'categoryEarning_id'
+      });
     }
   }
   Earning.init({
     user_id: DataTypes.INTEGER,
+    type_transaction: DataTypes.STRING,
     categoryEarning_id: DataTypes.INTEGER,
     dompet_id: DataTypes.INTEGER,
     earning: DataTypes.INTEGER,

@@ -6,6 +6,7 @@ module.exports = {
     const dataEarningsToBeSeeded = earningsData.map((eachEarningData) => {
       return {
         user_id: eachEarningData.user_id,
+        type_transaction: eachEarningData.type_transaction,
         categoryEarning_id: eachEarningData.categoryEarning_id,
         dompet_id: eachEarningData.dompet_id,
         earning: eachEarningData.earning,

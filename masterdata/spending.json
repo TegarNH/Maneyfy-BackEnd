@@ -1,10 +1,50 @@
 [
   {
     "user_id": 1,
-    "categorySpending_id": 1,
-    "dompet_id": 2,
+    "categorySpending_id": 2,
+    "dompet_id": 1,
+    "spending": 5000,
+    "name_spending": "Makan",
+    "date_spending": "2022-04-18"
+  },
+  {
+    "user_id": 1,
+    "categorySpending_id": 3,
+    "dompet_id": 1,
+    "spending": 4000,
+    "name_spending": "Naik KRL",
+    "date_spending": "2022-04-28"
+  },
+  {
+    "user_id": 1,
+    "categorySpending_id": 16,
+    "dompet_id": 1,
+    "spending": 10000,
+    "name_spending": "BPJS bulan mei",
+    "date_spending": "2022-05-18"
+  },
+  {
+    "user_id": 1,
+    "categorySpending_id": 4,
+    "dompet_id": 1,
+    "spending": 200000,
+    "name_spending": "Listrik bulan juni",
+    "date_spending": "2022-06-05"
+  },
+  {
+    "user_id": 1,
+    "categorySpending_id": 2,
+    "dompet_id": 1,
     "spending": 50000,
-    "name_spending": "Beli Makan",
-    "date_spending": "2022-07-12"
+    "name_spending": "Beli Pizza",
+    "date_spending": "2022-06-14"
+  },
+  {
+    "user_id": 1,
+    "categorySpending_id": 10,
+    "dompet_id": 1,
+    "spending": 75000,
+    "name_spending": "Healing ke puncak",
+    "date_spending": "2022-10-04"
   }
 ]

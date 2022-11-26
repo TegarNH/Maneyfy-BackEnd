@@ -1,50 +1,110 @@
 [
   {
     "user_id": 1,
+    "type_transaction": "earning",
     "categoryEarning_id": 1,
     "dompet_id": 1,
     "earning": 100000,
-    "name_earning": "Gaji",
-    "date_earning": "2022-05-21"
+    "name_earning": "Gaji Asisten bulan Mei",
+    "date_earning": "2022-05-12"
   },
   {
     "user_id": 1,
-    "categoryEarning_id": 1,
+    "type_transaction": "earning",
+    "categoryEarning_id": 6,
     "dompet_id": 1,
     "earning": 200000,
-    "name_earning": "Gaji",
-    "date_earning": "2022-06-21"
+    "name_earning": "Profit Invest Ayam",
+    "date_earning": "2022-06-23"
   },
   {
     "user_id": 1,
-    "categoryEarning_id": 1,
+    "type_transaction": "earning",
+    "categoryEarning_id": 2,
     "dompet_id": 1,
     "earning": 300000,
-    "name_earning": "Gaji",
-    "date_earning": "2022-05-21"
+    "name_earning": "Lembur Asisten",
+    "date_earning": "2022-05-06"
   },
   {
     "user_id": 1,
+    "type_transaction": "earning",
     "categoryEarning_id": 1,
     "dompet_id": 1,
     "earning": 400000,
-    "name_earning": "Gaji",
-    "date_earning": "2022-07-21"
+    "name_earning": "Gaji Asisten bulan Juli",
+    "date_earning": "2022-07-23"
   },
   {
     "user_id": 1,
-    "categoryEarning_id": 1,
+    "type_transaction": "earning",
+    "categoryEarning_id": 4,
     "dompet_id": 1,
     "earning": 500000,
-    "name_earning": "Gaji",
-    "date_earning": "2022-07-21"
+    "name_earning": "Jual Sepeda",
+    "date_earning": "2022-07-12"
   },
   {
     "user_id": 1,
+    "type_transaction": "earning",
     "categoryEarning_id": 1,
     "dompet_id": 1,
     "earning": 100000,
-    "name_earning": "Gaji",
-    "date_earning": "2022-08-21"
+    "name_earning": "Gaji Asisten bulan Agustus",
+    "date_earning": "2022-08-11"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "spending",
+    "categoryEarning_id": 2,
+    "dompet_id": 1,
+    "earning": 5000,
+    "name_earning": "Makan",
+    "date_earning": "2022-04-18"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "spending",
+    "categoryEarning_id": 3,
+    "dompet_id": 1,
+    "earning": 4000,
+    "name_earning": "Naik KRL",
+    "date_earning": "2022-04-28"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "spending",
+    "categoryEarning_id": 16,
+    "dompet_id": 1,
+    "earning": 10000,
+    "name_earning": "BPJS bulan mei",
+    "date_earning": "2022-05-18"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "spending",
+    "categoryEarning_id": 4,
+    "dompet_id": 1,
+    "earning": 200000,
+    "name_earning": "Listrik bulan juni",
+    "date_earning": "2022-06-05"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "spending",
+    "categoryEarning_id": 2,
+    "dompet_id": 1,
+    "earning": 50000,
+    "name_earning": "Beli Pizza",
+    "date_earning": "2022-06-14"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "spending",
+    "categoryEarning_id": 10,
+    "dompet_id": 1,
+    "earning": 75000,
+    "name_earning": "Healing ke puncak",
+    "date_earning": "2022-10-04"
   }
 ]
