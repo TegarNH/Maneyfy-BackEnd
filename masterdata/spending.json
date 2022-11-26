@@ -1,10 +1,10 @@
 [
-    {
-        "user_id": 1,
-        "categorySpending_id": 1,
-        "dompet_id": 2,
-        "spending": 50000,
-        "name_spending": "Beli Makan",
-        "date_spending": "2022-07-12"
-    }
+  {
+    "user_id": 1,
+    "categorySpending_id": 1,
+    "dompet_id": 2,
+    "spending": 50000,
+    "name_spending": "Beli Makan",
+    "date_spending": "2022-07-12"
+  }
 ]

@@ -27,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     categorySpending_id: DataTypes.INTEGER,
     dompet_id: DataTypes.INTEGER,
     spending: DataTypes.INTEGER,
-    name_spending: DataTypes.STRING
+    name_spending: DataTypes.STRING,
+    date_spending: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Spending',

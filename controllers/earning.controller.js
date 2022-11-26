@@ -1,15 +1,35 @@
-const { Earning }             = require('../models');
+const { Earning, sequelize }             = require('../models');
+const { Op } = require("sequelize");
 
 const getEarningData = async (req, res) => {
     try {
-        const foundEarning = await Earning.findByPk(req.Earning.id, {
-            attributes: [ 'user_id', 'categoryEarning_id', 'dompet_id', 'earning', 'name_earning', 'date_earning' ],
-        });
-        
+
+      const options = {
+        attributes: [ 'user_id', 'categoryEarning_id', 'dompet_id', 'earning', 'name_earning', 'date_earning' ],
+        where: {
+          [Op.and]: [
+            sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_earning')), 2022),
+            sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_earning')), 05),
+            { user_id: 1 },
+            { dompet_id: 1 },
+          ],
+          
+        }
+      };
+  
+      const allProducts = await Earning.findAll(options);
+  
+      // const result = allProducts.map((eachProduct) => {
+      //     return {
+      //         id: eachProduct.id,
+      //         url_icDompet: eachProduct.url_icDompet
+      //     }
+      //   })
+
         return res.status(200).json({
             status: "success",
             msg: "Earning berhasil ditemukan",
-            data: foundEarning
+            data: allProducts
         })
     } catch (err) {
         return res.status(500).json({

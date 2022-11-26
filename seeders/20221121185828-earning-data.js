@@ -8,7 +8,7 @@ module.exports = {
         user_id: eachEarningData.user_id,
         categoryEarning_id: eachEarningData.categoryEarning_id,
         dompet_id: eachEarningData.dompet_id,
-        earning: eachEarningData.Earning,
+        earning: eachEarningData.earning,
         name_earning: eachEarningData.name_earning,
         date_earning: eachEarningData.date_earning,
         createdAt: new Date(),
