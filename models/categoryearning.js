@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
       CategoryEarning.belongsTo(models.IconEarning, {
         foreignKey: 'icEarning_id'
       });
-      CategoryEarning.hasMany(models.Earning, {
-        foreignKey: 'categoryEarning_id'
+      CategoryEarning.hasMany(models.Transaction, {
+        foreignKey: 'categoryTransaction_id'
       });
     }
   }

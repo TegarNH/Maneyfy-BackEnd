@@ -1,0 +1,110 @@
+[
+  {
+    "user_id": 1,
+    "type_transaction": "earning",
+    "categoryTransaction_id": 1,
+    "dompet_id": 1,
+    "amount_transaction": 100000,
+    "name_transaction": "Gaji Asisten bulan Mei",
+    "date_transaction": "2022-05-12"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "earning",
+    "categoryTransaction_id": 6,
+    "dompet_id": 1,
+    "amount_transaction": 200000,
+    "name_transaction": "Profit Invest Ayam",
+    "date_transaction": "2022-06-23"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "earning",
+    "categoryTransaction_id": 2,
+    "dompet_id": 1,
+    "amount_transaction": 300000,
+    "name_transaction": "Lembur Asisten",
+    "date_transaction": "2022-05-06"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "earning",
+    "categoryTransaction_id": 1,
+    "dompet_id": 1,
+    "amount_transaction": 400000,
+    "name_transaction": "Gaji Asisten bulan Juli",
+    "date_transaction": "2022-07-23"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "earning",
+    "categoryTransaction_id": 4,
+    "dompet_id": 1,
+    "amount_transaction": 500000,
+    "name_transaction": "Jual Sepeda",
+    "date_transaction": "2022-07-12"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "earning",
+    "categoryTransaction_id": 1,
+    "dompet_id": 1,
+    "amount_transaction": 100000,
+    "name_transaction": "Gaji Asisten bulan Agustus",
+    "date_transaction": "2022-08-11"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "spending",
+    "categoryTransaction_id": 2,
+    "dompet_id": 1,
+    "amount_transaction": 5000,
+    "name_transaction": "Makan",
+    "date_transaction": "2022-04-18"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "spending",
+    "categoryTransaction_id": 3,
+    "dompet_id": 1,
+    "amount_transaction": 4000,
+    "name_transaction": "Naik KRL",
+    "date_transaction": "2022-04-28"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "spending",
+    "categoryTransaction_id": 16,
+    "dompet_id": 1,
+    "amount_transaction": 10000,
+    "name_transaction": "BPJS bulan mei",
+    "date_transaction": "2022-05-18"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "spending",
+    "categoryTransaction_id": 4,
+    "dompet_id": 1,
+    "amount_transaction": 200000,
+    "name_transaction": "Listrik bulan juni",
+    "date_transaction": "2022-06-05"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "spending",
+    "categoryTransaction_id": 2,
+    "dompet_id": 1,
+    "amount_transaction": 50000,
+    "name_transaction": "Beli Pizza",
+    "date_transaction": "2022-06-14"
+  },
+  {
+    "user_id": 1,
+    "type_transaction": "spending",
+    "categoryTransaction_id": 10,
+    "dompet_id": 1,
+    "amount_transaction": 75000,
+    "name_transaction": "Healing ke puncak",
+    "date_transaction": "2022-10-04"
+  }
+]

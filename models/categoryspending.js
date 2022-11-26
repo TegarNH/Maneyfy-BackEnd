@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       CategorySpending.belongsTo(models.User, {
         foreignKey: 'user_id'
       });
-      CategorySpending.hasMany(models.Earning, {
-        foreignKey: 'categoryEarning_id'
-      });
       CategorySpending.belongsTo(models.IconSpending, {
         foreignKey: 'icSpending_id'
+      });
+      CategorySpending.hasMany(models.Transaction, {
+        foreignKey: 'categoryTransaction_id'
       });
     }
   }
