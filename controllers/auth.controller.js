@@ -36,7 +36,6 @@ const register = async (req, res) => {
         icDompet_id: eachDompetData.icDompet_id,
         name_dompet: eachDompetData.name_dompet,
         amount: eachDompetData.amount,
-        url: eachDompetData.url,
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -72,10 +71,10 @@ const register = async (req, res) => {
       msg: 'User created successfully',
       data: createdUser
     });
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 };

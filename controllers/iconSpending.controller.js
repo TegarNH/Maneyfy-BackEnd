@@ -9,10 +9,10 @@ const getAllIconSpending = async (req, res) => {
       msg: "Semua Icon Spending berhasil ditampilkan",
       data: IconSpendings
     })
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 }

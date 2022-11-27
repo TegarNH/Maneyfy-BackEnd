@@ -9,10 +9,10 @@ const getAllIconEarning = async (req, res) => {
       msg: "Semua Icon Earning berhasil ditampilkan",
       data: IconEarnings
     })
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 }

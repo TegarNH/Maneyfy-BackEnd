@@ -133,10 +133,10 @@ const getTransactionData = async (req, res) => {
         msg: 'parameter month dan year harus diisi'
       });
     }
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 }
@@ -216,7 +216,7 @@ const createTransaction = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 }
@@ -243,7 +243,7 @@ const updateTransaction = async (req, res) => {
       })
     }
 
-    foundTransaction.update({
+    await foundTransaction.update({
       type_transaction: type_transaction,
       categoryTransaction_id: categoryTransaction_id,
       dompet_id: dompet_id,
@@ -267,28 +267,34 @@ const updateTransaction = async (req, res) => {
 
 const deleteTransaction = async (req, res) => {
   try {
-    const deletedTransaction = await Transaction.destroy({
+    const options = {
       where: {
         [Op.and]: [
           { user_id: req.user.id },
           { id: req.params.id },
         ],
-      },
-    });
-    if (!deletedTransaction) {
+      }
+    };
+
+    const foundTransaction = await Transaction.findOne(options);
+
+    if (!foundTransaction) {
       return res.status(404).json({
         error: 'Failed Delete',
         msg: `Transaction dengan id ${req.params.id} tidak ditemukan`
-      })
+      });
     }
+
+    await foundTransaction.destroy();
+
     return res.status(200).json({
       status: 'success',
       msg: 'Transaction berhasil dihapus'
     })
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 };

@@ -1,118 +1,164 @@
-const { CategoryEarning } = require('../models');
+const { CategoryEarning, IconEarning } = require('../models');
+const { Op } = require("sequelize");
 
-const getCategoryEarningData = async (req, res) => {
+
+const getAllCategoryEarning = async (req, res) => {
   try {
-    const foundCategoryEarning = await CategoryEarning.findByPk(req.CategoryEarning.id, {
-      attributes: ['user_id', 'icEarning_id', 'categoryName_earning'],
-    });
+    const options = {
+      where: {
+        user_id: req.user.id,
+      },
+      include: {
+        model: IconEarning
+      },
+    };
+
+    const allCategoryEarnings = await CategoryEarning.findAll(options);
 
     return res.status(200).json({
       status: "success",
-      msg: "Category Earning berhasil ditemukan",
-      data: foundCategoryEarning
+      msg: "Semua Category Earning berhasil ditampilkan",
+      data: allCategoryEarnings
     })
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 }
 
 const getCategoryEarningById = async (req, res) => {
-  const foundCategoryEarning = await CategoryEarning.findByPk(req.params.id);
+  try {
+    const options = {
+      where: {
+        [Op.and]: [
+          { user_id: req.user.id },
+          { id: req.params.id },
+        ],
+      },
+      include: {
+        model: IconEarning
+      },
+    };
 
-  if (!foundCategoryEarning) {
-    return res.status(404).json({
-      msg: `Category Earning dengan id ${req.params.id} tidak ditemukan`
+    const foundCategoryEarning = await CategoryEarning.findOne(options);
+
+    if (!foundCategoryEarning) {
+      return res.status(404).json({
+        status: 'error',
+        msg: `Category Earning dengan id ${req.params.id} tidak ditemukan`
+      })
+    }
+    return res.status(200).json({
+      status: 'success',
+      result: foundCategoryEarning
+    })
+  } catch (error) {
+    return res.status(500).json({
+      status: 'error',
+      msg: error.message
     })
   }
-  res.status(200).json({
-    status: 'success',
-    result: foundCategoryEarning
-  })
 }
 
 const createCategoryEarning = async (req, res) => {
   try {
-    const { user_id, icEarning_id, categoryName_earning } = req.body;
+    const { icEarning_id, categoryName_earning } = req.body;
 
     const createdCategoryEarning = await CategoryEarning.create({
-      user_id: user_id,
+      user_id: req.user.id,
       icEarning_id: icEarning_id,
       categoryName_earning: categoryName_earning
     });
-    res.status(201).json({
+
+    return res.status(201).json({
       status: 'success',
       result: createdCategoryEarning
     });
   } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 }
 
 const updateCategoryEarning = async (req, res) => {
   try {
-    const { user_id, icEarning_id, categoryName_earning } = req.body;
-    let id = req.CategoryEarning.id;
-    if (!(await CategoryEarning.findByPk(id))) return res.status(404).json({
-      status: "Error",
-      msg: "Category Earning not found!"
-    });
+    const { icEarning_id, categoryName_earning } = req.body;
 
-    const updatedCategoryEarning = await CategoryEarning.update({
-      user_id: user_id,
+    const options = {
+      where: {
+        [Op.and]: [
+          { user_id: req.user.id },
+          { id: req.params.id },
+        ],
+      }
+    };
+
+    const updatedCategoryEarning = await CategoryEarning.findOne(options);
+
+    if (!updatedCategoryEarning) {
+      return res.status(404).json({
+        status: "Error",
+        msg: `Category Earning dengan id ${req.params.id} tidak ditemukan`
+      });
+    }
+
+    await updatedCategoryEarning.update({
       icEarning_id: icEarning_id,
       categoryName_earning: categoryName_earning
-    }, {
-      where: {
-        id: id
-      }
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       status: "Success",
       msg: "Data updated successfully",
-      data: updatedCategoryEarning[1]
+      data: updatedCategoryEarning
     });
   } catch (error) {
-    res.status(400).json({
-      status: "Error",
-      msg: "Update data failed!",
-      error: error
-    });
+    return res.status(500).json({
+      status: 'error',
+      msg: error.message
+    })
   }
 };
 
 const deleteCategoryEarning = async (req, res) => {
   try {
-    const deletedCategoryEarning = await CategoryEarning.destroy({
+    const options = {
       where: {
-        id: req.params.id
+        [Op.and]: [
+          { user_id: req.user.id },
+          { id: req.params.id },
+        ],
       }
-    });
+    };
+
+    const deletedCategoryEarning = await CategoryEarning.findOne(options);
     if (!deletedCategoryEarning) {
       return res.status(404).json({
+        status: "Error",
         msg: `Category Earning dengan id ${req.params.id} tidak ditemukan`
       })
     }
-    res.status(200).json({
+
+    await deletedCategoryEarning.destroy();
+
+    return res.status(200).json({
       status: 'success',
       msg: 'Category Earning berhasil dihapus'
     })
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 };
 
 module.exports = {
-  getCategoryEarningData,
+  getAllCategoryEarning,
   getCategoryEarningById,
   createCategoryEarning,
   updateCategoryEarning,

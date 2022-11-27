@@ -9,10 +9,10 @@ const getUserData = async (req, res) => {
       msg: "User berhasil ditemukan",
       data: foundUser
     })
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 }
@@ -44,7 +44,7 @@ const updateUser = async (req, res) => {
     if (foundUserbyEmail) {
       // Kalau emailnya sama dengan email sebelumnya, tetap bisa update 
       if (foundUserbyEmail.email === foundUser.email) {
-        foundUser.update({
+        await foundUser.update({
           name: name,
           email: email,
           profile_picture: profile_picture
@@ -64,7 +64,7 @@ const updateUser = async (req, res) => {
       }
     }
 
-    foundUser.update({
+    await foundUser.update({
       name: name,
       email: email,
       profile_picture: profile_picture
@@ -85,16 +85,16 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const idUser = req.user.id;
-    const deletedUser = await User.destroy({
-      where: {
-        id: idUser
-      }
-    });
-    if (!deletedUser) {
+    const foundUser = await User.findByPk(idUser);
+
+    if (!foundUser) {
       return res.status(404).json({
-        msg: `User dengan id ${idUser} tidak ditemukan`
+        status: 'Error',
+        msg: `User not found!`
       })
     }
+
+    await foundUser.destroy();
 
     // Delete Dompet User
     await Dompet.destroy({ where: { user_id: idUser } });
@@ -113,10 +113,10 @@ const deleteUser = async (req, res) => {
       status: 'success',
       msg: 'User berhasil dihapus'
     })
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 }

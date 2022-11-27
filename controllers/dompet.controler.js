@@ -1,126 +1,199 @@
-const { Dompet } = require('../models');
+const { Dompet, IconDompet, Transaction } = require('../models');
+const { Op } = require("sequelize");
 
-const getDompetData = async (req, res) => {
+const getAllDompet = async (req, res) => {
   try {
-    const foundDompet = await Dompet.findByPk(req.user.id, {
-      attributes: ['user_id', 'icDompet_id', 'name_dompet', 'amount', 'url'],
-    });
+    const options = {
+      where: {
+        user_id: req.user.id,
+      },
+      include: {
+        model: IconDompet
+      },
+    };
+
+    const allDompets = await Dompet.findAll(options);
 
     return res.status(200).json({
       status: "success",
-      msg: "Dompet berhasil ditemukan",
-      data: foundDompet
+      msg: "Semua Dompet berhasil ditampilkan",
+      data: allDompets
     })
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 }
 
 const getDompetById = async (req, res) => {
-  const foundDompet = await Dompet.findByPk(req.params.id);
+  try {
+    const options = {
+      where: {
+        [Op.and]: [
+          { user_id: req.user.id },
+          { id: req.params.id },
+        ],
+      },
+      include: {
+        model: IconDompet
+      },
+    };
 
-  if (!foundDompet) {
-    return res.status(404).json({
-      msg: `Dompet dengan id ${req.params.id} tidak ditemukan`
+    const foundDompet = await Dompet.findOne(options);
+
+    if (!foundDompet) {
+      return res.status(404).json({
+        status: 'error',
+        msg: `Dompet dengan id ${req.params.id} tidak ditemukan`
+      })
+    }
+    return res.status(200).json({
+      status: 'success',
+      result: foundDompet
+    })
+  } catch (error) {
+    return res.status(500).json({
+      status: 'error',
+      msg: error.message
     })
   }
-  res.status(200).json({
-    status: 'success',
-    result: foundDompet
-  })
+}
+
+const getTransactionByIdDompet = async (req, res) => {
+  try {
+    const options = {
+      where: {
+        [Op.and]: [
+          { user_id: req.user.id },
+          { id: req.params.id },
+        ],
+      },
+      include: [IconDompet, Transaction],
+    };
+
+    const foundDompet = await Dompet.findOne(options);
+
+    if (!foundDompet) {
+      return res.status(404).json({
+        status: 'error',
+        msg: `Dompet dengan id ${req.params.id} tidak ditemukan`
+      })
+    }
+    return res.status(200).json({
+      status: 'success',
+      result: foundDompet
+    })
+  } catch (error) {
+    return res.status(500).json({
+      status: 'error',
+      msg: error.message
+    })
+  }
 }
 
 const createDompet = async (req, res) => {
   try {
-    const { user_id, icDompet_id, name_dompet, amount, url } = req.body;
+    const { icDompet_id, name_dompet } = req.body;
 
-    // const foundIconDompet = await IconDompet.findByPk(icDompet_id, {
-    //   attributes: [ 'url_icDompet' ],
-    // });
     const createdDompet = await Dompet.create({
-      user_id: user_id,
+      user_id: req.user.id,
       icDompet_id: icDompet_id,
       name_dompet: name_dompet,
-      amount: amount,
-      url: url
+      amount: 0
     });
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       result: createdDompet
     });
   } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 }
 
 const updateDompet = async (req, res) => {
   try {
-    const { user_id, icDompet_id, name_dompet, amount, url } = req.body;
-    let id = req.Dompet.id;
-    if (!(await Dompet.findByPk(id))) return res.status(404).json({
-      status: "Error",
-      msg: "Dompet not found!"
-    });
+    const { icDompet_id, name_dompet } = req.body;
 
-    const updatedDompet = await Dompet.update({
-      user_id: user_id,
-      icDompet_id: icDompet_id,
-      name_dompet: name_dompet,
-      amount: amount,
-      url: url
-    }, {
+    const options = {
       where: {
-        id: id
+        [Op.and]: [
+          { user_id: req.user.id },
+          { id: req.params.id },
+        ],
       }
+    };
+
+    const updatedDompet = await Dompet.findOne(options);
+
+    if (!updatedDompet) {
+      return res.status(404).json({
+        status: "Error",
+        msg: `Dompet dengan id ${req.params.id} tidak ditemukan`
+      });
+    }
+
+    await updatedDompet.update({
+      icDompet_id: icDompet_id,
+      name_dompet: name_dompet
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       status: "Success",
       msg: "Data updated successfully",
-      data: updatedDompet[1]
+      data: updatedDompet
     });
   } catch (error) {
-    res.status(400).json({
-      status: "Error",
-      msg: "Update data failed!",
-      error: error
-    });
+    return res.status(500).json({
+      status: 'error',
+      msg: error.message
+    })
   }
 };
 
 const deleteDompet = async (req, res) => {
   try {
-    const deletedDompet = await Dompet.destroy({
+    const options = {
       where: {
-        id: req.params.id
+        [Op.and]: [
+          { user_id: req.user.id },
+          { id: req.params.id },
+        ],
       }
-    });
+    };
+
+    const deletedDompet = await Dompet.findOne(options);
     if (!deletedDompet) {
       return res.status(404).json({
+        status: "Error",
         msg: `Dompet dengan id ${req.params.id} tidak ditemukan`
       })
     }
-    res.status(200).json({
+
+    await Transaction.destroy({ where: { dompet_id: deletedDompet.id } });
+
+    await deletedDompet.destroy();
+
+    return res.status(200).json({
       status: 'success',
       msg: 'Dompet berhasil dihapus'
     })
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 };
 
 module.exports = {
-  getDompetData,
+  getAllDompet,
   getDompetById,
+  getTransactionByIdDompet,
   createDompet,
   updateDompet,
   deleteDompet

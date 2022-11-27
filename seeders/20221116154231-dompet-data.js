@@ -9,7 +9,6 @@ module.exports = {
         icDompet_id: eachDompetData.icDompet_id,
         name_dompet: eachDompetData.name_dompet,
         amount: eachDompetData.amount,
-        url: eachDompetData.url,
         createdAt: new Date(),
         updatedAt: new Date()
       }

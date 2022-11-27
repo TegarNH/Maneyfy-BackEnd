@@ -1,118 +1,163 @@
-const { CategorySpending } = require('../models');
+const { CategorySpending, IconSpending } = require('../models');
+const { Op } = require("sequelize");
 
-const getCategorySpendingData = async (req, res) => {
+const getAllCategorySpending = async (req, res) => {
   try {
-    const foundCategorySpending = await CategorySpending.findByPk(req.CategorySpending.id, {
-      attributes: ['user_id', 'icSpending_id', 'categoryName_spending'],
-    });
+    const options = {
+      where: {
+        user_id: req.user.id,
+      },
+      include: {
+        model: IconSpending
+      },
+    };
+
+    const allCategorySpendings = await CategorySpending.findAll(options);
 
     return res.status(200).json({
       status: "success",
-      msg: "Category Spending berhasil ditemukan",
-      data: foundCategorySpending
+      msg: "Semua Category Spending berhasil ditampilkan",
+      data: allCategorySpendings
     })
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 }
 
 const getCategorySpendingById = async (req, res) => {
-  const foundCategorySpending = await CategorySpending.findByPk(req.params.id);
+  try {
+    const options = {
+      where: {
+        [Op.and]: [
+          { user_id: req.user.id },
+          { id: req.params.id },
+        ],
+      },
+      include: {
+        model: IconSpending
+      },
+    };
 
-  if (!foundCategorySpending) {
-    return res.status(404).json({
-      msg: `Category Spending dengan id ${req.params.id} tidak ditemukan`
+    const foundCategorySpending = await CategorySpending.findOne(options);
+
+    if (!foundCategorySpending) {
+      return res.status(404).json({
+        status: 'error',
+        msg: `Category Spending dengan id ${req.params.id} tidak ditemukan`
+      })
+    }
+    return res.status(200).json({
+      status: 'success',
+      result: foundCategorySpending
+    })
+  } catch (error) {
+    return res.status(500).json({
+      status: 'error',
+      msg: error.message
     })
   }
-  res.status(200).json({
-    status: 'success',
-    result: foundCategorySpending
-  })
 }
 
 const createCategorySpending = async (req, res) => {
   try {
-    const { user_id, icSpending_id, categoryName_spending } = req.body;
+    const { icSpending_id, categoryName_spending } = req.body;
 
     const createdCategorySpending = await CategorySpending.create({
-      user_id: user_id,
+      user_id: req.user.id,
       icSpending_id: icSpending_id,
       categoryName_spending: categoryName_spending
     });
-    res.status(201).json({
+
+    return res.status(201).json({
       status: 'success',
       result: createdCategorySpending
     });
   } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 }
 
 const updateCategorySpending = async (req, res) => {
   try {
-    const { user_id, icSpending_id, categoryName_spending } = req.body;
-    let id = req.CategorySpending.id;
-    if (!(await CategorySpending.findByPk(id))) return res.status(404).json({
-      status: "Error",
-      msg: "Category Spending not found!"
-    });
+    const { icSpending_id, categoryName_spending } = req.body;
 
-    const updatedCategorySpending = await CategorySpending.update({
-      user_id: user_id,
+    const options = {
+      where: {
+        [Op.and]: [
+          { user_id: req.user.id },
+          { id: req.params.id },
+        ],
+      }
+    };
+
+    const updatedCategorySpending = await CategorySpending.findOne(options);
+
+    if (!updatedCategorySpending) {
+      return res.status(404).json({
+        status: "Error",
+        msg: `Category Spending dengan id ${req.params.id} tidak ditemukan`
+      });
+    }
+
+    await updatedCategorySpending.update({
       icSpending_id: icSpending_id,
       categoryName_spending: categoryName_spending
-    }, {
-      where: {
-        id: id
-      }
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       status: "Success",
       msg: "Data updated successfully",
-      data: updatedCategorySpending[1]
+      data: updatedCategorySpending
     });
   } catch (error) {
-    res.status(400).json({
-      status: "Error",
-      msg: "Update data failed!",
-      error: error
-    });
+    return res.status(500).json({
+      status: 'error',
+      msg: error.message
+    })
   }
 };
 
 const deleteCategorySpending = async (req, res) => {
   try {
-    const deletedCategorySpending = await CategorySpending.destroy({
+    const options = {
       where: {
-        id: req.params.id
+        [Op.and]: [
+          { user_id: req.user.id },
+          { id: req.params.id },
+        ],
       }
-    });
+    };
+
+    const deletedCategorySpending = await CategorySpending.findOne(options);
     if (!deletedCategorySpending) {
       return res.status(404).json({
+        status: "Error",
         msg: `Category Spending dengan id ${req.params.id} tidak ditemukan`
       })
     }
-    res.status(200).json({
+
+    await deletedCategorySpending.destroy();
+
+    return res.status(200).json({
       status: 'success',
       msg: 'Category Spending berhasil dihapus'
     })
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({
       status: 'error',
-      msg: err.message
+      msg: error.message
     })
   }
 };
 
 module.exports = {
-  getCategorySpendingData,
+  getAllCategorySpending,
   getCategorySpendingById,
   createCategorySpending,
   updateCategorySpending,

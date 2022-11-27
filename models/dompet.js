@@ -26,8 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     user_id: DataTypes.INTEGER,
     icDompet_id: DataTypes.INTEGER,
     name_dompet: DataTypes.STRING,
-    amount: DataTypes.INTEGER,
-    url: DataTypes.STRING
+    amount: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Dompet',

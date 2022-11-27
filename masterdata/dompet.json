@@ -3,7 +3,6 @@
     "user_id": 1,
     "icDompet_id": 1,
     "name_dompet": "Cash",
-    "amount": 0,
-    "url": "https://res.cloudinary.com/dzskwtwm7/image/upload/v1669219033/iconDompet/rupiah_fjulvu.webp"
+    "amount": 0
   }
 ]
