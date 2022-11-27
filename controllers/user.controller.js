@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Dompet, Transaction, CategoryEarning, CategorySpending } = require('../models');
 
 const getUserData = async (req, res) => {
   try {
@@ -20,32 +20,63 @@ const getUserData = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { name, email, profile_picture } = req.body;
-    const idUser = req.user.id;
-    if (!(await User.findByPk(idUser))) return res.status(404).json({
-      status: "Error",
-      msg: "User not found!"
-    });
 
-    const updatedUser = await User.update({
-      name: name,
-      email: email,
-      profile_picture: profile_picture
-    }, {
+    const idUser = req.user.id;
+
+    // search user by token
+    const foundUser = await User.findByPk(idUser);
+    // Check if user found based on token
+    if (!foundUser) {
+      return res.status(404).json({
+        status: 'Error',
+        msg: `User not found!`
+      })
+    }
+
+    // search user by email
+    const foundUserbyEmail = await User.findOne({
       where: {
-        id: idUser
+        email: email
       }
     });
 
-    res.status(201).json({
+    // Check if user found based on email (cek conflict)
+    if (foundUserbyEmail) {
+      // Kalau emailnya sama dengan email sebelumnya, tetap bisa update 
+      if (foundUserbyEmail.email === foundUser.email) {
+        foundUser.update({
+          name: name,
+          email: email,
+          profile_picture: profile_picture
+        });
+        return res.status(201).json({
+          status: "Success",
+          msg: "Data updated successfully",
+          data: foundUser
+        });
+      } else {
+        // Emailnya ditemukan di database, tapi bukan email
+        // user itu sendiri
+        return res.status(409).json({
+          status: 'Failed',
+          msg: `Email sudah pernah dipakai user lain`
+        })
+      }
+    }
+
+    foundUser.update({
+      name: name,
+      email: email,
+      profile_picture: profile_picture
+    });
+    return res.status(201).json({
       status: "Success",
       msg: "Data updated successfully",
-      data: updatedUser[1]
+      data: foundUser
     });
   } catch (error) {
-    res.status(400).json({
+    return res.status(500).json({
       status: "Error",
-      msg: "Update data failed!",
-      id: idUser,
       error: error.message
     });
   }
@@ -64,14 +95,28 @@ const deleteUser = async (req, res) => {
         msg: `User dengan id ${idUser} tidak ditemukan`
       })
     }
-    res.status(200).json({
+
+    // Delete Dompet User
+    await Dompet.destroy({ where: { user_id: idUser } });
+
+    // Delete Transaction User
+    await Transaction.destroy({ where: { user_id: idUser } });
+
+    // Delete Category Earning User
+    await CategoryEarning.destroy({ where: { user_id: idUser } });
+
+    // Delete Category Spending User
+    await CategorySpending.destroy({ where: { user_id: idUser } });
+
+
+    return res.status(200).json({
       status: 'success',
       msg: 'User berhasil dihapus'
     })
   } catch (err) {
     return res.status(500).json({
       status: 'error',
-      msg: err.msg
+      msg: err.message
     })
   }
 }

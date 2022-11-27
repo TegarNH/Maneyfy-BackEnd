@@ -171,7 +171,7 @@ const getTransactionById = async (req, res) => {
       };
 
       const foundTransaction = await Transaction.findOne(options);
-      res.status(200).json({
+      return res.status(200).json({
         status: 'success transaction earning',
         result: foundTransaction
       })
@@ -187,7 +187,7 @@ const getTransactionById = async (req, res) => {
       };
 
       const foundTransaction = await Transaction.findOne(options);
-      res.status(200).json({
+      return res.status(200).json({
         status: 'success transaction spending',
         result: foundTransaction
       })
@@ -209,7 +209,7 @@ const createTransaction = async (req, res) => {
       name_transaction: name_transaction,
       date_transaction: date_transaction
     });
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       result: createdTransaction
     });
@@ -252,13 +252,13 @@ const updateTransaction = async (req, res) => {
       date_transaction: date_transaction
     });
 
-    res.status(201).json({
+    return res.status(201).json({
       status: "Success",
       msg: "Data updated successfully",
       data: foundTransaction
     });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       status: "Error",
       error: error.message
     });
@@ -281,7 +281,7 @@ const deleteTransaction = async (req, res) => {
         msg: `Transaction dengan id ${req.params.id} tidak ditemukan`
       })
     }
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       msg: 'Transaction berhasil dihapus'
     })
