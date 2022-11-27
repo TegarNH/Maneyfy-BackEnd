@@ -15,10 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Dompet, {
         foreignKey: 'user_id'
       });
-      User.hasMany(models.Spending, {
-        foreignKey: 'user_id'
-      });
-      User.hasMany(models.Earning, {
+      User.hasMany(models.Transaction, {
         foreignKey: 'user_id'
       });
       User.hasMany(models.CategorySpending, {

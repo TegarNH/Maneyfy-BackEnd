@@ -4,19 +4,33 @@ const { Op } = require("sequelize");
 const getTransactionData = async (req, res) => {
   try {
     const { month, year, category } = req.query;
+    const { dompet_id } = req.body;
+
+    if (!dompet_id) {
+      return res.status(400).json({
+        status: 'error',
+        msg: 'request body harus diisi dompet_id'
+      });
+    }
 
     if (month && year) {
+      if (!(parseInt(month) >= 1 && parseInt(month) <= 12)) {
+        return res.status(400).json({
+          status: 'error',
+          msg: 'parameter month harus angka 1 sampai 12'
+        });
+
+      }
       if (category) {
         switch (category) {
           case "earning":
             const options = {
-              attributes: ['user_id', 'type_transaction', 'categoryTransaction_id', 'dompet_id', 'amount_transaction', 'name_transaction', 'date_transaction'],
               where: {
                 [Op.and]: [
                   sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_transaction')), parseInt(year)),
                   sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_transaction')), parseInt(month)),
-                  { user_id: 1 },
-                  { dompet_id: 1 },
+                  { user_id: req.user.id },
+                  { dompet_id: dompet_id },
                   { type_transaction: "earning" },
                 ],
               },
@@ -31,18 +45,17 @@ const getTransactionData = async (req, res) => {
 
             return res.status(200).json({
               status: "success",
-              msg: "Earning berhasil ditemukan",
+              msg: `Menampilkan Transaksi Earning pada dompet_id ${dompet_id} di bulan ${month}, tahun ${year}`,
               data: allProducts
             })
           case "spending":
             const options1 = {
-              attributes: ['user_id', 'type_transaction', 'categoryTransaction_id', 'dompet_id', 'amount_transaction', 'name_transaction', 'date_transaction'],
               where: {
                 [Op.and]: [
                   sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_transaction')), parseInt(year)),
                   sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_transaction')), parseInt(month)),
-                  { user_id: 1 },
-                  { dompet_id: 1 },
+                  { user_id: req.user.id },
+                  { dompet_id: dompet_id },
                   { type_transaction: "spending" },
                 ],
               },
@@ -57,7 +70,7 @@ const getTransactionData = async (req, res) => {
 
             return res.status(200).json({
               status: "success",
-              msg: "Spending berhasil ditemukan",
+              msg: `Menampilkan Transaksi Spending pada dompet_id ${dompet_id} di bulan ${month}, tahun ${year}`,
               data: allProducts1
             })
           default:
@@ -68,13 +81,12 @@ const getTransactionData = async (req, res) => {
         }
       } else {
         const options2 = {
-          attributes: ['user_id', 'type_transaction', 'categoryTransaction_id', 'dompet_id', 'amount_transaction', 'name_transaction', 'date_transaction'],
           where: {
             [Op.and]: [
               sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_transaction')), parseInt(year)),
               sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_transaction')), parseInt(month)),
-              { user_id: 1 },
-              { dompet_id: 1 },
+              { user_id: req.user.id },
+              { dompet_id: dompet_id },
               { type_transaction: "earning" },
             ],
           },
@@ -86,13 +98,12 @@ const getTransactionData = async (req, res) => {
         };
 
         const options3 = {
-          attributes: ['user_id', 'type_transaction', 'categoryTransaction_id', 'dompet_id', 'amount_transaction', 'name_transaction', 'date_transaction'],
           where: {
             [Op.and]: [
               sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_transaction')), parseInt(year)),
               sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_transaction')), parseInt(month)),
-              { user_id: 1 },
-              { dompet_id: 1 },
+              { user_id: req.user.id },
+              { dompet_id: dompet_id },
               { type_transaction: "spending" },
             ],
           },
@@ -100,7 +111,7 @@ const getTransactionData = async (req, res) => {
             model: CategorySpending,
             include: [IconSpending]
           },
-          order: sequelize.literal('id DESC'),
+          order: sequelize.literal('EXTRACT(DAY FROM date_transaction) DESC'),
         };
 
         let allProducts2 = await Transaction.findAll(options2);
@@ -112,14 +123,14 @@ const getTransactionData = async (req, res) => {
 
         return res.status(200).json({
           status: "success",
-          msg: "Transaksi berhasil ditemukan",
+          msg: `Menampilkan Semua Transaksi pada dompet_id ${dompet_id} di bulan ${month}, tahun ${year}`,
           data: allProducts2
         })
       }
     } else {
       return res.status(400).json({
         status: 'error',
-        msg: 'parameter month atau year harus diisi'
+        msg: 'parameter month dan year harus diisi'
       });
     }
   } catch (err) {
@@ -131,25 +142,67 @@ const getTransactionData = async (req, res) => {
 }
 
 const getTransactionById = async (req, res) => {
-  const foundTransaction = await Transaction.findByPk(req.params.id);
+  const options = {
+    where: {
+      [Op.and]: [
+        { user_id: req.user.id },
+        { id: req.params.id },
+      ],
+    },
+  };
+
+  const foundTransaction = await Transaction.findOne(options);
 
   if (!foundTransaction) {
     return res.status(404).json({
+      status: 'Not Found',
       msg: `Transaction dengan id ${req.params.id} tidak ditemukan`
     })
+  } else {
+    if (foundTransaction.type_transaction === "earning") {
+      const options = {
+        where: {
+          id: req.params.id
+        },
+        include: {
+          model: CategoryEarning,
+          include: [IconEarning]
+        },
+      };
+
+      const foundTransaction = await Transaction.findOne(options);
+      res.status(200).json({
+        status: 'success transaction earning',
+        result: foundTransaction
+      })
+    } else {
+      const options = {
+        where: {
+          id: req.params.id
+        },
+        include: {
+          model: CategorySpending,
+          include: [IconSpending]
+        },
+      };
+
+      const foundTransaction = await Transaction.findOne(options);
+      res.status(200).json({
+        status: 'success transaction spending',
+        result: foundTransaction
+      })
+    }
+
   }
-  res.status(200).json({
-    status: 'success',
-    result: foundTransaction
-  })
 }
 
 const createTransaction = async (req, res) => {
   try {
-    const { user_id, categoryTransaction_id, dompet_id, amount_transaction, name_transaction, date_transaction } = req.body;
+    const { type_transaction, categoryTransaction_id, dompet_id, amount_transaction, name_transaction, date_transaction } = req.body;
 
     const createdTransaction = await Transaction.create({
-      user_id: user_id,
+      user_id: req.user.id,
+      type_transaction: type_transaction,
       categoryTransaction_id: categoryTransaction_id,
       dompet_id: dompet_id,
       amount_transaction: amount_transaction,
@@ -170,36 +223,44 @@ const createTransaction = async (req, res) => {
 
 const updateTransaction = async (req, res) => {
   try {
-    const { user_id, categoryTransaction_id, dompet_id, amount_transaction, name_transaction, date_transaction } = req.body;
-    let id = req.Transaction.id;
-    if (!(await Transaction.findByPk(id))) return res.status(404).json({
-      status: "Error",
-      msg: "Transaction not found!"
-    });
+    const { type_transaction, categoryTransaction_id, dompet_id, amount_transaction, name_transaction, date_transaction } = req.body;
 
-    const updatedTransaction = await Transaction.update({
-      user_id: user_id,
+    const options = {
+      where: {
+        [Op.and]: [
+          { user_id: req.user.id },
+          { id: req.params.id },
+        ],
+      },
+    };
+
+    const foundTransaction = await Transaction.findOne(options);
+
+    if (!foundTransaction) {
+      return res.status(404).json({
+        status: 'Not Found',
+        msg: `Transaction dengan id ${req.params.id} tidak ditemukan`
+      })
+    }
+
+    foundTransaction.update({
+      type_transaction: type_transaction,
       categoryTransaction_id: categoryTransaction_id,
       dompet_id: dompet_id,
       amount_transaction: amount_transaction,
       name_transaction: name_transaction,
       date_transaction: date_transaction
-    }, {
-      where: {
-        id: id
-      }
     });
 
     res.status(201).json({
       status: "Success",
       msg: "Data updated successfully",
-      data: updatedTransaction[1]
+      data: foundTransaction
     });
   } catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       status: "Error",
-      msg: "Update data failed!",
-      error: error
+      error: error.message
     });
   }
 };
@@ -208,11 +269,15 @@ const deleteTransaction = async (req, res) => {
   try {
     const deletedTransaction = await Transaction.destroy({
       where: {
-        id: req.params.id
-      }
+        [Op.and]: [
+          { user_id: req.user.id },
+          { id: req.params.id },
+        ],
+      },
     });
     if (!deletedTransaction) {
       return res.status(404).json({
+        error: 'Failed Delete',
         msg: `Transaction dengan id ${req.params.id} tidak ditemukan`
       })
     }

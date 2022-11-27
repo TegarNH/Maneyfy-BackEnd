@@ -17,10 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       Dompet.belongsTo(models.IconDompet, {
         foreignKey: 'icDompet_id'
       });
-      Dompet.hasMany(models.Spending, {
-        foreignKey: 'dompet_id'
-      });
-      Dompet.hasMany(models.Earning, {
+      Dompet.hasMany(models.Transaction, {
         foreignKey: 'dompet_id'
       });
     }

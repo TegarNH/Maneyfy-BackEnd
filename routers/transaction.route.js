@@ -4,9 +4,10 @@ const transactionController = require('../controllers/transaction.controller');
 const { authenticate } = require('../misc/passport');
 
 router.get('/', authenticate, transactionController.getTransactionData);
+router.post('/', authenticate, transactionController.createTransaction);
+
 router.get('/:id', authenticate, transactionController.getTransactionById);
-router.post('/', transactionController.createTransaction);
-router.put('/:id', transactionController.updateTransaction);
-router.delete('/:id', transactionController.deleteTransaction);
+router.put('/:id', authenticate, transactionController.updateTransaction);
+router.delete('/:id', authenticate, transactionController.deleteTransaction);
 
 module.exports = router;
