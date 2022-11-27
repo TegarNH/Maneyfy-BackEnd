@@ -1,9 +1,9 @@
 'use strict';
 const usersData = require('../masterdata/user.json');
-const bcrypt    = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     const dataUsersToBeSeeded = usersData.map((eachUserData) => {
       return {
         name: eachUserData.name,
@@ -17,7 +17,7 @@ module.exports = {
     await queryInterface.bulkInsert('Users', dataUsersToBeSeeded, {});
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Users', null, { truncate: true, restartIdentity: true });
   }
 };

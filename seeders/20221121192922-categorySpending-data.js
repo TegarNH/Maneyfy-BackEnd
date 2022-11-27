@@ -2,7 +2,7 @@
 const categorySpendingsData = require('../masterdata/categorySpending.json');
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     const dataSpendingsToBeSeeded = categorySpendingsData.map((eachSpendingData) => {
       return {
         user_id: eachSpendingData.user_id,
@@ -15,7 +15,7 @@ module.exports = {
     await queryInterface.bulkInsert('CategorySpendings', dataSpendingsToBeSeeded, {});
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('CategorySpendings', null, { truncate: true, restartIdentity: true });
   }
 };

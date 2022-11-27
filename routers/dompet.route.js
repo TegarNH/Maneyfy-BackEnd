@@ -1,7 +1,7 @@
-const express                = require('express');
-const router                 = express.Router();
-const dompetController       = require('../controllers/dompet.controler');
-const {authenticate}         = require('../misc/passport');
+const express = require('express');
+const router = express.Router();
+const dompetController = require('../controllers/dompet.controler');
+const { authenticate } = require('../misc/passport');
 
 router.get('/data', authenticate, dompetController.getDompetData);
 router.get('/:id', authenticate, dompetController.getDompetById);

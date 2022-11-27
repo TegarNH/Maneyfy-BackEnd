@@ -1,18 +1,18 @@
-const express                = require('express');
-const router                 = express.Router();
-const authController         = require('../controllers/auth.controller');
-const userRoutes             = require('./user.route');
+const express = require('express');
+const router = express.Router();
+const authController = require('../controllers/auth.controller');
+const userRoutes = require('./user.route');
 
-const dompetRoutes           = require('./dompet.route');
-const iconDompetRoutes       = require('./iconDompet.route');
+const dompetRoutes = require('./dompet.route');
+const iconDompetRoutes = require('./iconDompet.route');
 
-const transactionRoutes      = require('./transaction.route');
+const transactionRoutes = require('./transaction.route');
 
 const categorySpendingRoutes = require('./categorySpending.route');
-const iconSpendingRoutes     = require('./iconSpending.route');
+const iconSpendingRoutes = require('./iconSpending.route');
 
-const categoryEarningRoutes  = require('./categoryEarning.route');
-const iconEarningRoutes      = require('./iconEarning.route');
+const categoryEarningRoutes = require('./categoryEarning.route');
+const iconEarningRoutes = require('./iconEarning.route');
 const { createValidationFor, checkValidationResult } = require('../misc/validator');
 
 

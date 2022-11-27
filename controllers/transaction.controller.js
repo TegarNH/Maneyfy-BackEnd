@@ -41,12 +41,12 @@ const getTransactionData = async (req, res) => {
               order: sequelize.literal('EXTRACT(DAY FROM date_transaction) DESC'),
             };
 
-            const allProducts = await Transaction.findAll(options);
+            const allTransactions = await Transaction.findAll(options);
 
             return res.status(200).json({
               status: "success",
               msg: `Menampilkan Transaksi Earning pada dompet_id ${dompet_id} di bulan ${month}, tahun ${year}`,
-              data: allProducts
+              data: allTransactions
             })
           case "spending":
             const options1 = {
@@ -66,12 +66,12 @@ const getTransactionData = async (req, res) => {
               order: sequelize.literal('EXTRACT(DAY FROM date_transaction) DESC'),
             };
 
-            const allProducts1 = await Transaction.findAll(options1);
+            const allTransactions1 = await Transaction.findAll(options1);
 
             return res.status(200).json({
               status: "success",
               msg: `Menampilkan Transaksi Spending pada dompet_id ${dompet_id} di bulan ${month}, tahun ${year}`,
-              data: allProducts1
+              data: allTransactions1
             })
           default:
             return res.status(400).json({
@@ -114,17 +114,17 @@ const getTransactionData = async (req, res) => {
           order: sequelize.literal('EXTRACT(DAY FROM date_transaction) DESC'),
         };
 
-        let allProducts2 = await Transaction.findAll(options2);
-        const allProducts3 = await Transaction.findAll(options3);
+        let allTransactions2 = await Transaction.findAll(options2);
+        const allTransactions3 = await Transaction.findAll(options3);
 
-        allProducts2 = allProducts2.concat(allProducts3).sort((a, b) => {
+        allTransactions2 = allTransactions2.concat(allTransactions3).sort((a, b) => {
           return new Date(b.date_transaction).getTime() - new Date(a.date_transaction).getTime();
         });
 
         return res.status(200).json({
           status: "success",
           msg: `Menampilkan Semua Transaksi pada dompet_id ${dompet_id} di bulan ${month}, tahun ${year}`,
-          data: allProducts2
+          data: allTransactions2
         })
       }
     } else {

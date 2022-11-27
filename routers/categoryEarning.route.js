@@ -1,7 +1,7 @@
-const express                          = require('express');
-const router                           = express.Router();
-const categoryEarningController       = require('../controllers/categoryEarning.controller');
-const {authenticate}                   = require('../misc/passport');
+const express = require('express');
+const router = express.Router();
+const categoryEarningController = require('../controllers/categoryEarning.controller');
+const { authenticate } = require('../misc/passport');
 
 router.get('/', authenticate, categoryEarningController.getCategoryEarningData);
 router.get('/:id', authenticate, categoryEarningController.getCategoryEarningById);

@@ -2,7 +2,7 @@
 const dompetsData = require('../masterdata/Dompet.json');
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     const dataDompetsToBeSeeded = dompetsData.map((eachDompetData) => {
       return {
         user_id: eachDompetData.user_id,
@@ -17,7 +17,7 @@ module.exports = {
     await queryInterface.bulkInsert('Dompets', dataDompetsToBeSeeded, {});
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('Dompets', null, { truncate: true, restartIdentity: true });
   }
 };
