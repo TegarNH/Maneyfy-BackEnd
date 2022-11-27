@@ -1,9 +1,8 @@
-const express                  = require('express');
-const router                   = express.Router();
-const iconSpendingController   = require('../controllers/iconSpending.controller');
-const {authenticate}           = require('../misc/passport');
+const express = require('express');
+const router = express.Router();
+const iconSpendingController = require('../controllers/iconSpending.controller');
+const { authenticate } = require('../misc/passport');
 
-router.get('/', authenticate, iconSpendingController.getIconSpendingData);
-router.get('/:id', authenticate, iconSpendingController.getIconSpendingById);
+router.get('/', authenticate, iconSpendingController.getAllIconSpending);
 
 module.exports = router;
