@@ -1,4 +1,4 @@
-const { User, IconDompet, Dompet, sequelize } = require('../models');
+const { User, sequelize } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const queryInterface = sequelize.getQueryInterface();

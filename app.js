@@ -23,8 +23,12 @@ app.use((err, req, res, next) => {
       status: 'Not Found',
       msg: err.message
     });
-  }
-  else {
+  } else if (err.storageErrors) {
+    res.status(400).json({
+      status: err.name,
+      msg: err.message
+    });
+  } else {
     res.status(500).json({
       status: err.name,
       msg: err.message

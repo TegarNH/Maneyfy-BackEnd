@@ -20,6 +20,7 @@ const getUserData = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { name, email, profile_picture } = req.body;
+    let profile_picture_temp = profile_picture
 
     const idUser = req.user.id;
 
@@ -31,6 +32,10 @@ const updateUser = async (req, res) => {
         status: 'Error',
         msg: `User not found!`
       })
+    }
+
+    if (!profile_picture_temp) {
+      profile_picture_temp = 'https://res.cloudinary.com/dzskwtwm7/image/upload/v1669220512/user/user_quy29n.webp';
     }
 
     // search user by email
@@ -47,7 +52,7 @@ const updateUser = async (req, res) => {
         await foundUser.update({
           name: name,
           email: email,
-          profile_picture: profile_picture
+          profile_picture: profile_picture_temp
         });
         return res.status(201).json({
           status: "Success",
@@ -67,7 +72,7 @@ const updateUser = async (req, res) => {
     await foundUser.update({
       name: name,
       email: email,
-      profile_picture: profile_picture
+      profile_picture: profile_picture_temp
     });
     return res.status(201).json({
       status: "Success",

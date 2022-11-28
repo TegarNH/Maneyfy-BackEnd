@@ -2,28 +2,28 @@ const multer = require('multer');
 const fs = require('fs');
 let path = require('path');
 
-  const storage  = multer.diskStorage({
-    destination: (req, file, cb) => {
-      const fileLocation = './public/static/images';
-      if (!fs.existsSync(fileLocation)) fs.mkdirSync(fileLocation, { recursive: true });
-      cb(null, fileLocation);
-    },
-    filename: (req, file, cb) => {
-      const fileType = file.mimetype.split('/')[1];
-      cb(null, file.fieldname + '-' + Date.now() + `.${fileType}`);
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const fileLocation = './public/static/images';
+    if (!fs.existsSync(fileLocation)) fs.mkdirSync(fileLocation, { recursive: true });
+    cb(null, fileLocation);
+  },
+  filename: (req, file, cb) => {
+    const fileType = file.mimetype.split('/')[1];
+    cb(null, file.fieldname + '-' + Date.now() + `.${fileType}`);
   }
 })
 const imageUpload = multer({
   storage: storage,
   fileFilter: (req, file, cb) => {
-      let ext = path.extname(file.originalname);
+    let ext = path.extname(file.originalname);
     //   console.log(ext);
-      if (ext === '.png' ||  ext === '.jpg' || ext === '.jpeg' || ext === '.mp4') return cb(null, true);
-      cb(null, false);
-      cb(new Error('Wrong filetype'));
+    if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.webp') return cb(null, true);
+    cb(null, false);
+    cb(new Error('Only .png, .jpg, .jpeg, and .webp extensions are supported'));
   },
   limits: {
-      fileSize: 2000000
+    fileSize: 2000000
   }
 })
 
