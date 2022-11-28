@@ -1,9 +1,64 @@
-const { Transaction, sequelize, CategoryEarning, IconEarning, CategorySpending, IconSpending } = require('../models');
+const { sequelize, Transaction, Dompet, CategoryEarning, IconEarning, CategorySpending, IconSpending } = require('../models');
 const { Op } = require("sequelize");
+
+const updateAmountDompet = async (user_id, dompet_id) => {
+  // 1. CALCULATE ALL TRANSACTION EARNING BASED dompet_id
+  const optionsEarning = {
+    attributes: ['amount_transaction'],
+    where: {
+      [Op.and]: [
+        { user_id: user_id },
+        { dompet_id: dompet_id },
+        { type_transaction: "earning" },
+      ],
+    }
+  };
+  const amountEarnings = await Transaction.findAll(optionsEarning);
+  let totalEarning = 0;
+  amountEarnings.forEach(transaction => {
+    totalEarning += transaction.amount_transaction;
+  });
+
+  // 2. CALCULATE ALL TRANSACTION SPENDING BASED dompet_id
+  const optionsSpending = {
+    attributes: ['amount_transaction'],
+    where: {
+      [Op.and]: [
+        { user_id: user_id },
+        { dompet_id: dompet_id },
+        { type_transaction: "spending" },
+      ],
+    }
+  };
+  const amountSpendings = await Transaction.findAll(optionsSpending);
+  let totalSpending = 0;
+  amountSpendings.forEach(transaction => {
+    totalSpending += transaction.amount_transaction;
+  });
+
+  // 3. FIND DOMPET BY dompet_id, user_id TO UPDATE AMOUNT DOMPET
+  const optionsDompet = {
+    where: {
+      [Op.and]: [
+        { id: dompet_id },
+        { user_id: user_id },
+      ],
+    },
+  };
+  const foundDompet = await Dompet.findOne(optionsDompet);
+
+  // 4. CALCULATE TOTAL EARNING AND SPENDING, UPDATE TO DATABASE
+  const totalAmount = totalEarning - totalSpending;
+  await foundDompet.update({
+    amount: totalAmount
+  });
+
+  return totalAmount;
+}
 
 const getTransactionData = async (req, res) => {
   try {
-    const { month, year, category } = req.query;
+    const { month, year } = req.query;
     const { dompet_id } = req.body;
 
     if (!dompet_id) {
@@ -19,114 +74,68 @@ const getTransactionData = async (req, res) => {
           status: 'error',
           msg: 'parameter month harus angka 1 sampai 12'
         });
-
       }
-      if (category) {
-        switch (category) {
-          case "earning":
-            const options = {
-              where: {
-                [Op.and]: [
-                  sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_transaction')), parseInt(year)),
-                  sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_transaction')), parseInt(month)),
-                  { user_id: req.user.id },
-                  { dompet_id: dompet_id },
-                  { type_transaction: "earning" },
-                ],
-              },
-              include: {
-                model: CategoryEarning,
-                include: [IconEarning]
-              },
-              order: sequelize.literal('EXTRACT(DAY FROM date_transaction) DESC'),
-            };
 
-            const allTransactions = await Transaction.findAll(options);
+      const optionsEarning = {
+        where: {
+          [Op.and]: [
+            sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_transaction')), parseInt(year)),
+            sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_transaction')), parseInt(month)),
+            { user_id: req.user.id },
+            { dompet_id: dompet_id },
+            { type_transaction: "earning" },
+          ],
+        },
+        include: {
+          model: CategoryEarning,
+          include: [IconEarning]
+        },
+        order: sequelize.literal('EXTRACT(DAY FROM date_transaction) DESC'),
+      };
 
-            return res.status(200).json({
-              status: "success",
-              msg: `Menampilkan Transaksi Earning pada dompet_id ${dompet_id} di bulan ${month}, tahun ${year}`,
-              data: allTransactions
-            })
-          case "spending":
-            const options1 = {
-              where: {
-                [Op.and]: [
-                  sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_transaction')), parseInt(year)),
-                  sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_transaction')), parseInt(month)),
-                  { user_id: req.user.id },
-                  { dompet_id: dompet_id },
-                  { type_transaction: "spending" },
-                ],
-              },
-              include: {
-                model: CategorySpending,
-                include: [IconSpending]
-              },
-              order: sequelize.literal('EXTRACT(DAY FROM date_transaction) DESC'),
-            };
+      const optionsSpending = {
+        where: {
+          [Op.and]: [
+            sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_transaction')), parseInt(year)),
+            sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_transaction')), parseInt(month)),
+            { user_id: req.user.id },
+            { dompet_id: dompet_id },
+            { type_transaction: "spending" },
+          ],
+        },
+        include: {
+          model: CategorySpending,
+          include: [IconSpending]
+        },
+        order: sequelize.literal('EXTRACT(DAY FROM date_transaction) DESC'),
+      };
 
-            const allTransactions1 = await Transaction.findAll(options1);
+      let transactionEarnings = await Transaction.findAll(optionsEarning);
+      const transactionSpendings = await Transaction.findAll(optionsSpending);
 
-            return res.status(200).json({
-              status: "success",
-              msg: `Menampilkan Transaksi Spending pada dompet_id ${dompet_id} di bulan ${month}, tahun ${year}`,
-              data: allTransactions1
-            })
-          default:
-            return res.status(400).json({
-              status: 'error',
-              msg: 'parameter kategori harus earning atau spending'
-            });
-        }
-      } else {
-        const options2 = {
-          where: {
-            [Op.and]: [
-              sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_transaction')), parseInt(year)),
-              sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_transaction')), parseInt(month)),
-              { user_id: req.user.id },
-              { dompet_id: dompet_id },
-              { type_transaction: "earning" },
-            ],
-          },
-          include: {
-            model: CategoryEarning,
-            include: [IconEarning]
-          },
-          order: sequelize.literal('EXTRACT(DAY FROM date_transaction) DESC'),
-        };
+      // CALCULATE AMOUNT TRANSACTION //
+      let totalEarning = 0;
+      transactionEarnings.forEach(transaction => {
+        totalEarning += transaction.amount_transaction;
+      });
 
-        const options3 = {
-          where: {
-            [Op.and]: [
-              sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_transaction')), parseInt(year)),
-              sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_transaction')), parseInt(month)),
-              { user_id: req.user.id },
-              { dompet_id: dompet_id },
-              { type_transaction: "spending" },
-            ],
-          },
-          include: {
-            model: CategorySpending,
-            include: [IconSpending]
-          },
-          order: sequelize.literal('EXTRACT(DAY FROM date_transaction) DESC'),
-        };
+      let totalSpending = 0;
+      transactionSpendings.forEach(transaction => {
+        totalSpending += transaction.amount_transaction;
+      });
 
-        let allTransactions2 = await Transaction.findAll(options2);
-        const allTransactions3 = await Transaction.findAll(options3);
+      // JOIN JSON transactionEarnings AND transactionSpendings, SORT BY DATE (DESC) //
+      transactionEarnings = transactionEarnings.concat(transactionSpendings).sort((a, b) => {
+        return new Date(b.date_transaction).getTime() - new Date(a.date_transaction).getTime();
+      });
 
-        allTransactions2 = allTransactions2.concat(allTransactions3).sort((a, b) => {
-          return new Date(b.date_transaction).getTime() - new Date(a.date_transaction).getTime();
-        });
-
-        return res.status(200).json({
-          status: "success",
-          msg: `Menampilkan Semua Transaksi pada dompet_id ${dompet_id} di bulan ${month}, tahun ${year}`,
-          data: allTransactions2
-        })
-      }
+      return res.status(200).json({
+        status: "success",
+        msg: `Menampilkan Semua Transaksi pada dompet_id ${dompet_id} di bulan ${month}, tahun ${year}`,
+        totalEarning: totalEarning,
+        totalSpending: totalSpending,
+        data: transactionEarnings
+      })
     } else {
       return res.status(400).json({
         status: 'error',
@@ -199,9 +208,10 @@ const getTransactionById = async (req, res) => {
 const createTransaction = async (req, res) => {
   try {
     const { type_transaction, categoryTransaction_id, dompet_id, amount_transaction, name_transaction, date_transaction } = req.body;
+    const user_id = req.user.id;
 
     const createdTransaction = await Transaction.create({
-      user_id: req.user.id,
+      user_id: user_id,
       type_transaction: type_transaction,
       categoryTransaction_id: categoryTransaction_id,
       dompet_id: dompet_id,
@@ -209,8 +219,12 @@ const createTransaction = async (req, res) => {
       name_transaction: name_transaction,
       date_transaction: date_transaction
     });
+
+    const updatedAmount = await updateAmountDompet(user_id, dompet_id);
+
     return res.status(201).json({
       status: 'success',
+      AmountDompet: updatedAmount,
       result: createdTransaction
     });
   } catch (error) {
@@ -224,11 +238,12 @@ const createTransaction = async (req, res) => {
 const updateTransaction = async (req, res) => {
   try {
     const { type_transaction, categoryTransaction_id, dompet_id, amount_transaction, name_transaction, date_transaction } = req.body;
+    const user_id = req.user.id;
 
     const options = {
       where: {
         [Op.and]: [
-          { user_id: req.user.id },
+          { user_id: user_id },
           { id: req.params.id },
         ],
       },
@@ -246,15 +261,17 @@ const updateTransaction = async (req, res) => {
     await foundTransaction.update({
       type_transaction: type_transaction,
       categoryTransaction_id: categoryTransaction_id,
-      dompet_id: dompet_id,
       amount_transaction: amount_transaction,
       name_transaction: name_transaction,
       date_transaction: date_transaction
     });
 
+    const updatedAmount = await updateAmountDompet(user_id, dompet_id);
+
     return res.status(201).json({
       status: "Success",
       msg: "Data updated successfully",
+      AmountDompet: updatedAmount,
       data: foundTransaction
     });
   } catch (error) {
@@ -267,16 +284,18 @@ const updateTransaction = async (req, res) => {
 
 const deleteTransaction = async (req, res) => {
   try {
+    const user_id = req.user.id;
     const options = {
       where: {
         [Op.and]: [
-          { user_id: req.user.id },
+          { user_id: user_id },
           { id: req.params.id },
         ],
       }
     };
 
     const foundTransaction = await Transaction.findOne(options);
+    const dompetIdTransaction = foundTransaction.dompet_id;
 
     if (!foundTransaction) {
       return res.status(404).json({
@@ -286,10 +305,12 @@ const deleteTransaction = async (req, res) => {
     }
 
     await foundTransaction.destroy();
+    const updatedAmount = await updateAmountDompet(user_id, dompetIdTransaction);
 
     return res.status(200).json({
       status: 'success',
-      msg: 'Transaction berhasil dihapus'
+      msg: 'Transaction berhasil dihapus',
+      AmountDompet: updatedAmount
     })
   } catch (error) {
     return res.status(500).json({
