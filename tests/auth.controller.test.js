@@ -10,7 +10,7 @@ const authTest = () => {
                 .set('Content-Type', 'application/json')
                 .send({
                     name: 'test',
-                    email: 'test@mail.com',
+                    email: 'test@gmail.com',
                     password: '12345678'
                 })
             expect(res.statusCode).toEqual(201);
@@ -22,7 +22,7 @@ const authTest = () => {
                 .post('/api/register')
                 .set('Content-Type', 'application/json')
                 .send({
-                    email: 'test@mail.com',
+                    email: 'test@gmail.com',
                     password: '12345678'
                 })
             expect(res.statusCode).toEqual(422);
@@ -36,7 +36,7 @@ const authTest = () => {
                 .set('Content-Type', 'application/json')
                 .send({
                     name: "te",
-                    email: 'test@mail.com',
+                    email: 'test@gmail.com',
                     password: '12345678'
                 })
             expect(res.statusCode).toEqual(422);
@@ -63,7 +63,7 @@ const authTest = () => {
                 .set('Content-Type', 'application/json')
                 .send({
                     name: 'test',
-                    email: 'testmail.com',
+                    email: 'testgmail.com',
                     password: '12345678'
                 })
             expect(res.statusCode).toEqual(422);
@@ -77,7 +77,7 @@ const authTest = () => {
                 .set('Content-Type', 'application/json')
                 .send({
                     name: 'test',
-                    email: 'test@mail.com'
+                    email: 'test@gmail.com'
                 })
             expect(res.statusCode).toEqual(422);
             expect(res.body).toBeDefined();
@@ -90,7 +90,7 @@ const authTest = () => {
                 .set('Content-Type', 'application/json')
                 .send({
                     name: "test",
-                    email: 'test@mail.com',
+                    email: 'test@gmail.com',
                     password: '1234'
                 })
             expect(res.statusCode).toEqual(422);
@@ -99,8 +99,43 @@ const authTest = () => {
         });
     })
 
+    describe('Login API', () => {
+        it('should login users', async () => {
+            const res = await request(app)
+                .post('/api/login')
+                .set('Content-Type', 'application/json')
+                .send({
+                    email: 'test@gmail.com',
+                    password: '12345678'
+                })
+            expect(res.statusCode).toEqual(200);
+            expect(res.body).toHaveProperty('token');
+        });
+
+        it('throw login error email is null', async () => {
+            const res = await request(app)
+                .post('/api/login')
+                .set('Content-Type', 'application/json')
+                .send({
+                    password: '12345678'
+                })
+            expect(res.statusCode).toEqual(422);
+            expect(res.body).toBeDefined();
+            expect(res.body.errors[0].msg).toEqual("email cant be null");
+        });
+
+        it('throw login error password is null', async () => {
+            const res = await request(app)
+                .post('/api/login')
+                .set('Content-Type', 'application/json')
+                .send({
+                    email: 'test@gmail.com'
+                })
+            expect(res.statusCode).toEqual(422);
+            expect(res.body).toBeDefined();
+            expect(res.body.errors[0].msg).toEqual("password cant be null");
+        });
+    });
 }
-
-
 
 module.exports = authTest;
