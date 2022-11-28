@@ -17,7 +17,6 @@ const imageUpload = multer({
   storage: storage,
   fileFilter: (req, file, cb) => {
     let ext = path.extname(file.originalname);
-    //   console.log(ext);
     if (ext === '.png' || ext === '.jpg' || ext === '.jpeg' || ext === '.webp') return cb(null, true);
     cb(null, false);
     cb(new Error('Only .png, .jpg, .jpeg, and .webp extensions are supported'));
