@@ -13,15 +13,6 @@ const createValidationFor = (route) => {
                 check('email').not().isEmpty().withMessage('email cant be null'),
                 check('password').not().isEmpty().withMessage('password cant be null')
         ];
-        case 'forget-password':
-            return [
-                check('email').not().isEmpty().withMessage('email cant be null'),
-        ];
-        case 'update-user':
-            return [
-                check('name').not().isEmpty().withMessage('name cant be null'),
-        ];
-
         default:
             return [];
     }
