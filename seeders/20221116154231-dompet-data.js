@@ -1,5 +1,5 @@
 'use strict';
-const dompetsData = require('../masterdata/Dompet.json');
+const dompetsData = require('../masterdata/dompet.json');
 
 module.exports = {
   async up(queryInterface, Sequelize) {

@@ -2,7 +2,7 @@ const { User, sequelize } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const queryInterface = sequelize.getQueryInterface();
-const dompetsData = require('../masterdata/Dompet.json');
+const dompetsData = require('../masterdata/dompet.json');
 const categoryEarningsData = require('../masterdata/categoryEarning.json');
 const categorySpendingsData = require('../masterdata/categorySpending.json');
 
