@@ -1,4 +1,4 @@
-const { User, sequelize } = require('../models');
+const { User, Dompet, sequelize } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const queryInterface = sequelize.getQueryInterface();
@@ -102,10 +102,20 @@ const login = async (req, res) => {
       email: foundUser.email
     };
     const token = jwt.sign(payload, process.env.JWT_SECRET);
+
+    const options = {
+      attributes: ['id', 'name_dompet'],
+      where: {
+        user_id: foundUser.id,
+      },
+    };
+    const allDompets = await Dompet.findAll(options);
+
+
     return res.status(200).json({
       msg: "Login Success",
       token: token,
-      dataUser: foundUser
+      dataDompet: allDompets
     });
   };
   return res.status(400).json({

@@ -1,4 +1,4 @@
-const { CategorySpending, IconSpending } = require('../models');
+const { CategorySpending, IconSpending, Transaction } = require('../models');
 const { Op } = require("sequelize");
 
 const getAllCategorySpending = async (req, res) => {
@@ -125,6 +125,14 @@ const updateCategorySpending = async (req, res) => {
 
 const deleteCategorySpending = async (req, res) => {
   try {
+    const { typeTransaction } = req.body;
+    if (!typeTransaction) {
+      return res.status(400).json({
+        status: 'error',
+        msg: 'request body harus diisi typeTransaction'
+      });
+    }
+
     const options = {
       where: {
         [Op.and]: [
@@ -141,6 +149,15 @@ const deleteCategorySpending = async (req, res) => {
         msg: `Category Spending dengan id ${req.params.id} tidak ditemukan`
       })
     }
+
+    await Transaction.destroy({
+      where: {
+        [Op.and]: [
+          { categoryTransaction_id: deletedCategorySpending.id },
+          { type_transaction: typeTransaction },
+        ],
+      }
+    });
 
     await deletedCategorySpending.destroy();
 

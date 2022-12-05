@@ -58,13 +58,12 @@ const updateAmountDompet = async (user_id, dompet_id) => {
 
 const getTransactionData = async (req, res) => {
   try {
-    const { month, year } = req.query;
-    const { dompet_id } = req.body;
+    const { idDompet, month, year } = req.query;
 
-    if (!dompet_id) {
+    if (!idDompet) {
       return res.status(400).json({
         status: 'error',
-        msg: 'request body harus diisi dompet_id'
+        msg: 'parameter idDompet harus diisi'
       });
     }
 
@@ -82,7 +81,7 @@ const getTransactionData = async (req, res) => {
             sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_transaction')), parseInt(year)),
             sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_transaction')), parseInt(month)),
             { user_id: req.user.id },
-            { dompet_id: dompet_id },
+            { dompet_id: idDompet },
             { type_transaction: "earning" },
           ],
         },
@@ -99,7 +98,7 @@ const getTransactionData = async (req, res) => {
             sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('YEAR FROM date_transaction')), parseInt(year)),
             sequelize.where(sequelize.fn('EXTRACT', sequelize.literal('MONTH FROM date_transaction')), parseInt(month)),
             { user_id: req.user.id },
-            { dompet_id: dompet_id },
+            { dompet_id: idDompet },
             { type_transaction: "spending" },
           ],
         },
@@ -131,7 +130,7 @@ const getTransactionData = async (req, res) => {
 
       return res.status(200).json({
         status: "success",
-        msg: `Menampilkan Semua Transaksi pada dompet_id ${dompet_id} di bulan ${month}, tahun ${year}`,
+        msg: `Menampilkan Semua Transaksi pada dompet_id ${idDompet} di bulan ${month}, tahun ${year}`,
         totalEarning: totalEarning,
         totalSpending: totalSpending,
         data: transactionEarnings
