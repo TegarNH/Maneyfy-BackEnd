@@ -4,11 +4,6 @@
 <!-- markdownlint-disable -->
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
-Documentation Postman
-```bash
-https://documenter.getpostman.com/view/24721460/2s8YzP3QVG
-```
-
 ## Getting Started
 
 To get started running the project locally, please follow the steps below.
@@ -30,4 +25,9 @@ Finally, run the development.
 
 ```bash
 npm run local
+```
+
+## Documentation Postman
+```bash
+https://documenter.getpostman.com/view/24721460/2s8YzP3QVG
 ```
