@@ -1,4 +1,4 @@
-const { CategoryEarning, IconEarning, Transaction } = require('../models');
+const { sequelize, CategoryEarning, IconEarning, Transaction } = require('../models');
 const { Op } = require("sequelize");
 
 
@@ -11,6 +11,7 @@ const getAllCategoryEarning = async (req, res) => {
       include: {
         model: IconEarning
       },
+      order: sequelize.literal('id ASC'),
     };
 
     const allCategoryEarnings = await CategoryEarning.findAll(options);

@@ -1,4 +1,4 @@
-const { Dompet, IconDompet, Transaction } = require('../models');
+const { sequelize, Dompet, IconDompet, Transaction } = require('../models');
 const { Op } = require("sequelize");
 
 const getAllDompet = async (req, res) => {
@@ -10,6 +10,7 @@ const getAllDompet = async (req, res) => {
       include: {
         model: IconDompet
       },
+      order: sequelize.literal('id ASC'),
     };
 
     const allDompets = await Dompet.findAll(options);
