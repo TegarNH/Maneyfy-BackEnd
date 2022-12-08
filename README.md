@@ -28,7 +28,7 @@ npm run local
 ```
 
 ## Documentation Postman
-Visit the following site to view the API documentation:
+Visit the following site to view the API documentation
 
 ```bash
 https://documenter.getpostman.com/view/24721460/2s8YzP3QVG
