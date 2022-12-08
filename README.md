@@ -27,9 +27,5 @@ Finally, run the development.
 npm run local
 ```
 
-## Documentation Postman
-Visit the following site to view the API documentation.
+Visit the following site to view the API documentation [Postman](https://documenter.getpostman.com/view/24721460/2s8YzP3QVG).
 
-```bash
-https://documenter.getpostman.com/view/24721460/2s8YzP3QVG
-```
