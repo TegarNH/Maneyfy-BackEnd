@@ -1,0 +1,30 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "tegar123",
+    "database": "maneyfy",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "port": "5432"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "tegar123",
+    "database": "maneyfy",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "host": "ep-dark-poetry-327214-pooler.us-east-1.postgres.vercel-storage.com",
+    "username": "default",
+    "password": "9CB8MJlKdmiI",
+    "database": "verceldb",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true
+      }
+    },
+    "port": "5432"
+  }
+}
