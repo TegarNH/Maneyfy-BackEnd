@@ -5,7 +5,7 @@ const app = express();
 const logger = require('morgan');
 const cors = require('cors');
 
-app.use(cors({ origin: ["http://localhost:8000", "https://v2-maneyfy.vercel.app/", "https://v2-maneyfy-backend.onrender.com/api/"] }));
+app.use(cors({ origin: ["http://localhost:8000", "https://v2-maneyfy.vercel.app/", "https://maneyfy-front-end-tegarnh.vercel.app/", "https://v2-maneyfy-backend.onrender.com/api/"] }));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
