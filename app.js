@@ -5,7 +5,7 @@ const app = express();
 const logger = require('morgan');
 const cors = require('cors');
 
-app.use(cors({ origin: ["*"] }));
+app.use(cors({ origin: ["*"], methods: ["*"], allowedHeaders: ["*"] }));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
