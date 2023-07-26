@@ -5,7 +5,13 @@ const app = express();
 const logger = require('morgan');
 const cors = require('cors');
 
-app.use(cors({ origin: ["*"], methods: ["*"], allowedHeaders: ["*"] }));
+const corsOptions = {
+  origin: '*', // Atau ganti dengan daftar asal yang diizinkan ['https://v2-maneyfy.vercel.app', ...]
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
