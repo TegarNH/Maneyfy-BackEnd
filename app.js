@@ -7,7 +7,7 @@ const cors = require('cors');
 
 const corsOptions = {
   origin: '*', // Atau ganti dengan daftar asal yang diizinkan ['https://v2-maneyfy.vercel.app', ...]
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
